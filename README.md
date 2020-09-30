@@ -41,7 +41,7 @@ protected $middlewareGroups = [
 class Post extends Model
 {
     use HasLanguage;
-    use HasMedia; // spatie media-library
+    use HasMedia; // "spatie/laravel-medialibrary": "^8.0.0"
 }
 
 ## Database

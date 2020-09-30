@@ -3,12 +3,12 @@
 namespace Codanux\MultiLanguage\Traits\HasMedia;
 
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
-use Spatie\MediaLibrary\MediaRepository;
+use Spatie\MediaLibrary\InteractsWithMedia;
+use Spatie\MediaLibrary\MediaCollections\MediaRepository;
 
 trait MediaTrait {
 
-    use HasMediaTrait;
+    use InteractsWithMedia;
 
     public function getMedia(string $collectionName = 'default', $filters = []): Collection
     {

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 
-class CheckLocale
+class DetectRequestLocale
 {
     /**
      * Handle an incoming request.

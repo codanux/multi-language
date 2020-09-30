@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Route;
 class RouterMacros
 {
 
-    public function multiResource(): Closure
+    public function localeResource(): Closure
     {
         return function ($name, $controller = null, $options = [])
         {

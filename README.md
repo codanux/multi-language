@@ -15,10 +15,87 @@ You can install the package via composer:
 composer require codanux/multi-language
 ```
 
+## Configuration
+
+
+``` php
+php artisan vendor:publish --provider="Codanux\MultiLanguage\MultiLanguageServiceProvider"
+```
+
+To detect and change the locale of the application based on the request automatically, you can add the middleware to your `app/Http/Kernel`:
+
+``` php
+protected $middlewareGroups = [
+    'web' => [
+        \Codanux\MultiLanguage\DetectRequestLocale::class,
+        // ...
+    ]
+];
+```
+
 ## Usage
 
 ``` php
-// Usage description here
+## Model
+
+class Post extends Model
+{
+    use HasLanguage;
+    use HasMedia; // spatie media-library
+}
+
+## Database
+
+Schema::create('posts', function (Blueprint $table) {
+    $table->id();
+    $table->string('name');
+    $table->locale(); // added
+});
+
+## Route
+
+Route::localeResource('post', 'PostController')->names('post');
+
+Route::locale('get', 'post.index', 'PostController@index', 'post.index');
+
+
+## Controller
+
+public function index()
+{
+    // locale scope
+    $posts = (new Post())->newQuery()->locale()->get();
+}
+
+public function store(Request $request)
+{
+    $post = Post::create([
+       'name' => 'Post en',
+       'locale' => 'en',
+   ]);
+
+    Post::create([
+       'name' => 'Post tr',
+       'locale' => 'tr',
+       'translation_of' => $post->translation_of
+    ]);
+}
+
+public function show(Post $post)
+{
+    return view('post.show', compact('post'));
+}
+
+## Views
+
+post.index
+    @include("multi-language::links")
+
+post.show
+     @include("multi-language::links", ['translations' => ['post' => $post]])
+    // if category with translations ['category' => $category, 'post => $post]
+
+
 ```
 
 ### Testing

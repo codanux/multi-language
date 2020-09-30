@@ -1,0 +1,55 @@
+{
+    "name": "codanux/multi-language",
+    "description": "Multi Language Laravel",
+    "keywords": [
+        "codanux",
+        "multi-language"
+    ],
+    "homepage": "https://github.com/codanux/multi-language",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ömer",
+            "email": "codanux@hotmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^7.3",
+        "guzzlehttp/guzzle": "^7.0.1",
+        "laravel/framework": "^8.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^4.0",
+        "phpunit/phpunit": "^8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Codanux\\MultiLanguage\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Codanux\\MultiLanguage\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit",
+        "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Codanux\\MultiLanguage\\MultiLanguageServiceProvider"
+            ],
+            "aliases": {
+                "MultiLanguage": "Codanux\\MultiLanguage\\MultiLanguageFacade"
+            }
+        }
+    }
+}

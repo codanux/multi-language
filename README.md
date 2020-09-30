@@ -56,7 +56,7 @@ Schema::create('posts', function (Blueprint $table) {
 
 Route::localeResource('post', 'PostController')->names('post');
 
-Route::locale('get', 'post.index', 'PostController@index', 'post.index');
+Route::locale('get', 'post.index', 'PostController@index');
 
 
 ## Controller

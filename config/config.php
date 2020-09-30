@@ -13,4 +13,6 @@ return [
 
     'default_prefix' => false,
 
+    'active_class' => 'uk-active',
+
 ];

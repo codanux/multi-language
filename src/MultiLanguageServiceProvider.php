@@ -23,7 +23,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
          */
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'multi-language');
 
-        // $this->loadViewsFrom(__DIR__.'/../resources/views', 'multi-language');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'multi-language');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         // $this->loadRoutesFrom(__DIR__.'/routes.php');
 
@@ -33,9 +33,9 @@ class MultiLanguageServiceProvider extends ServiceProvider
             ], 'config');
 
             // Publishing the views.
-            /*$this->publishes([
+            $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/multi-language'),
-            ], 'views');*/
+            ], 'views');
 
             // Publishing assets.
             /*$this->publishes([

@@ -76,7 +76,8 @@ routeLocalized('post.show', $post)
 
 Post::localeSlug('post-tr')->first() // Post tr
 
-Post::localeSlug('post-tr', 'en)->first() // Post en
+Post::localeSlug('post-tr', 'en')->first() // Post en
+
 ## Controller
 
 public function index()

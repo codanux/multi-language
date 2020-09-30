@@ -72,6 +72,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
 
         Blueprint::macro('locale', function () {
             $this->string('locale');
+            $this->string('locale_slug')->nullable();
             $this->uuid('translation_of');
         });
 

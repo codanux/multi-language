@@ -18,14 +18,11 @@ class DetectRequestLocale
     public function handle($request, Closure $next)
     {
         if (in_array($request->segment(1), config('multi-language.locales'))) {
-            $this->change( Request::segment(1));
+            $this->change($request->segment(1));
         }
-        else if (\session('locale') && ! in_array($request->segment(1), config('multi-language.locales'))) {
-            $this->change(config('multi-language.default_locale'));
-        } elseif (! in_array($request->segment(1), config('multi-language.locales'))) {
+        else {
             $this->change(config('multi-language.default_locale'));
         }
-
 
         return $next($request);
     }

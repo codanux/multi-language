@@ -74,6 +74,9 @@ routeLocalized('post.show', $post)
 | GET\|HEAD | posts/{post} | en.post.show | App\Http\Controllers\PostController@show |
 | GET\|HEAD | tr/postlar/{post}   | tr.post.show | App\Http\Controllers\PostController@show |
 
+Post::localeSlug('post-tr')->first() // Post tr
+
+Post::localeSlug('post-tr', 'en)->first() // Post en
 ## Controller
 
 public function index()
@@ -92,6 +95,7 @@ public function store(Request $request)
     Post::create([
        'name' => 'Post tr',
        'locale' => 'tr',
+       'locale_slug' => 'post-tr',
        'translation_of' => $post->translation_of
     ]);
 }

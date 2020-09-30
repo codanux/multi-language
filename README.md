@@ -58,6 +58,21 @@ Route::localeResource('post', 'PostController')->names('post');
 
 Route::locale('get', 'post.index', 'PostController@index');
 
+## Generate Link
+
+routeLocalized('post.index')
+
+| Method   | URI     | Name    | Action                              |
+|----------|---------|---------|-------------------------------------|
+| GET\|HEAD | posts | en.post.index | App\Http\Controllers\PostController@index |
+| GET\|HEAD | tr/postlar   | tr.post.index | App\Http\Controllers\PostController@index |
+
+routeLocalized('post.show', $post)
+
+| Method   | URI     | Name    | Action                              |
+|----------|---------|---------|-------------------------------------|
+| GET\|HEAD | posts/{post} | en.post.show | App\Http\Controllers\PostController@show |
+| GET\|HEAD | tr/postlar/{post}   | tr.post.show | App\Http\Controllers\PostController@show |
 
 ## Controller
 

@@ -5,9 +5,9 @@ return [
         'index' => 'posts',
         'create' => 'posts/yeni',
         'store' => 'posts/yeni',
-        'show' => 'post/{post}',
-        'edit' => 'post/{post}/duzenle',
-        'update' => 'post/{post}/duzenle',
-        'destroy' => 'post/{post}/sil',
+        'show' => 'posts/{post}',
+        'edit' => 'posts/{post}/duzenle',
+        'update' => 'posts/{post}/duzenle',
+        'destroy' => 'posts/{post}/sil',
     ],
 ];

@@ -1,6 +1,6 @@
 <?php
 
-namespace Codanux\MultiLanguage;
+namespace Codanux\MultiLanguage\Models;
 
 use Illuminate\Database\Eloquent\Model;
 

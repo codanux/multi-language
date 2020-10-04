@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'welcome' => 'tr',
+    'home' => 'panel',
+
+
     'post' => [
         'index' => 'posts',
         'create' => 'posts/yeni',

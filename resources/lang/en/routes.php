@@ -1,6 +1,10 @@
 <?php
 
 return [
+    'welcome' => '', // default_prefix => false
+    'home' => 'dashboard',
+
+
     'post' => [
         'index' => 'posts',
         'create' => 'posts/create',

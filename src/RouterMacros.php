@@ -28,8 +28,14 @@ class RouterMacros
         return function ($type, $name, $action = null) {
             foreach (config('multi-language.locales') as $key => $locale)
             {
-                $route = Route::$type(trans("routes.{$name}", [], $locale), $action);
-                $route->prefix($locale == config('multi-language.default_locale') ? null : $locale);
+
+                $uri = trans("routes.{$name}", [], $locale);
+                $route = Route::$type($uri, $action);
+
+                if (config('multi-language.default_prefix') && $locale == config('multi-language.default_locale'))
+                {
+                    $route->prefix($locale);
+                }
                 if (! is_null($name)) {
                     $route->name($locale.'.'.$name);
                 }

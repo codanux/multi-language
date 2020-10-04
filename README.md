@@ -113,7 +113,7 @@ post.index
 
 post.show
      @include("multi-language::links", ['translations' => ['post' => $post]])
-    // if category with translations ['category' => $category, 'post => $post]
+    // category with translations ['category' => $category, 'post => $post]
 
 
 ```

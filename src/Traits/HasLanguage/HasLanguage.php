@@ -35,24 +35,9 @@ trait HasLanguage
         return $query->where('locale', $locale);
     }
 
-    public function scopeSlug($query, $slug)
+    public function scopeOrLocale($query, $locale = null)
     {
-        return $query->where('slug', $slug);
-    }
 
-    public function scopePublished($query)
-    {
-        return $query->where('is_published', 1);
-    }
-
-    public function trans($locale = null)
-    {
-        if (is_null($locale))
-        {
-            $locale = app()->getLocale();
-        }
-
-        return $this->translations()->locale($locale)->first();
     }
 
     public function scopeLocaleSlug($query, $slug, $locale = null)

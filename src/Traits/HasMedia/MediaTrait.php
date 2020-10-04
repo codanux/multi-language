@@ -3,23 +3,48 @@
 namespace Codanux\MultiLanguage\Traits\HasMedia;
 
 use Illuminate\Support\Collection;
-use Spatie\MediaLibrary\InteractsWithMedia;
-use Spatie\MediaLibrary\MediaCollections\MediaRepository;
 
 trait MediaTrait {
 
-    use InteractsWithMedia;
-
     public function getMedia(string $collectionName = 'default', $filters = []): Collection
     {
-        if ($media = app(MediaRepository::class)->getCollection($this, $collectionName, $filters))
+        $mediaRepository = config('multi-language.media.media_repository');
+
+        $media = $this->customMedia($this, $collectionName, $filters, $mediaRepository);
+
+        if ($media->count())
+            return $media;
+
+
+        $locale = config('multi-language.media.locale');
+
+        if (config('multi-language.media.translations_detect'))
         {
-            if ($media->count()) {
-                return $media;
+            $translations = $this->translations()->get();
+
+            if ($first = $translations->firstWhere('locale', $locale)) {
+                $translations = $translations->prepend($first)->unique();
+            }
+
+            foreach ($translations as $trans)
+            {
+                $media = $this->customMedia($trans, $collectionName, $filters, $mediaRepository);
+
+                if ($media->count())
+                    return $media;
             }
         }
+        else if ($locale)
+        {
+            $media = $this->customMedia($this->locale($locale)->first(), $collectionName, $filters, $mediaRepository);
+        }
 
-        // if not media default locale media select
-        return app(MediaRepository::class)->getCollection($this->trans(config('multi-language.default_locale')), $collectionName, $filters);
+
+        return $media;
+    }
+
+    protected function customMedia($class, $collectionName, $filters, $mediaRepository)
+    {
+        return app($mediaRepository)->getCollection($class, $collectionName, $filters);
     }
 }

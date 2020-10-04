@@ -14,6 +14,12 @@ return [
 
     'default_prefix' => false,
 
+    'media' => [
+        'translations_detect' => true, // translations all detect
+        'locale' => 'en', // first look locale
+        'media_repository' => 'Spatie\MediaLibrary\MediaCollections\MediaRepository',
+    ],
+
     'links' => [
         'li' => [
             'active_class' => 'uk-active',
@@ -23,6 +29,6 @@ return [
         'a' => [
             'class' => 'nav-link'
         ]
-    ]
+    ],
 
 ];

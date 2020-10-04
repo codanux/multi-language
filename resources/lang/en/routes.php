@@ -2,7 +2,7 @@
 
 return [
     'welcome' => '',
-    'home' => 'dashboard',
+    'dashboard' => 'dashboard',
 
 
     'post' => [

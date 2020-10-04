@@ -38,10 +38,10 @@ protected $middlewareGroups = [
 ``` php
 ## Model
 
-class Post extends Model
+class Post extends Model // implements HasMedia
 {
     use HasLanguage;
-    use HasMedia; // "spatie/laravel-medialibrary": "^8.0.0"
+    // use InteractsWithMedia, MediaTrait { MediaTrait::getMedia insteadof InteractsWithMedia; }
 }
 
 ## Database
@@ -55,17 +55,8 @@ Schema::create('posts', function (Blueprint $table) {
 ## Route
 
 Route::localeResource('post', 'PostController')->names('post');
-
-Route::locale('get', 'post.index', 'PostController@index');
-
-## Generate Link
-
-routeLocalized('post.index')
-
-| Method   | URI     | Name    | Action                              |
-|----------|---------|---------|-------------------------------------|
-| GET\|HEAD | posts | en.post.index | App\Http\Controllers\PostController@index |
-| GET\|HEAD | tr/postlar   | tr.post.index | App\Http\Controllers\PostController@index |
+or
+Route::locale('get', 'post.show', 'PostController@show');
 
 routeLocalized('post.show', $post)
 
@@ -74,9 +65,9 @@ routeLocalized('post.show', $post)
 | GET\|HEAD | posts/{post} | en.post.show | App\Http\Controllers\PostController@show |
 | GET\|HEAD | tr/postlar/{post}   | tr.post.show | App\Http\Controllers\PostController@show |
 
-Post::localeSlug('post-tr')->first() // Post tr
+Post::localeSlug('post-1', 'tr')->first() // Post tr
 
-Post::localeSlug('post-tr', 'en')->first() // Post en
+Post::localeSlug('post-1', 'en')->first() // Post en
 
 ## Controller
 
@@ -96,7 +87,7 @@ public function store(Request $request)
     Post::create([
        'name' => 'Post tr',
        'locale' => 'tr',
-       'locale_slug' => 'post-tr',
+       'locale_slug' => 'post-1',
        'translation_of' => $post->translation_of
     ]);
 }

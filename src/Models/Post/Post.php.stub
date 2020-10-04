@@ -1,5 +1,7 @@
 <?php
 
+// namespace App\Models\Post;
+
 use Codanux\MultiLanguage\Traits\HasLanguage\HasLanguage;
 use Codanux\MultiLanguage\Traits\HasMedia\MediaTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;

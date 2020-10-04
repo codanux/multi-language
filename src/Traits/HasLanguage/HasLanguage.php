@@ -8,14 +8,11 @@ trait HasLanguage
 {
     public static function bootHasLanguageTrait()
     {
-        self::creating(function ($model) {
-
+        self::creating(function ($model)
+        {
             if (is_null($model->translation_of))
             {
                 $model->translation_of = Str::uuid();
-            }
-            if (is_null($model->locale)) {
-                $model->locale = app()->getLocale();
             }
         });
     }

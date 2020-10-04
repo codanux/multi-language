@@ -32,10 +32,14 @@ class RouterMacros
                 $uri = trans("routes.{$name}", [], $locale);
                 $route = Route::$type($uri, $action);
 
-                if (config('multi-language.default_prefix') && $locale == config('multi-language.default_locale'))
-                {
+                if (config('multi-language.default_prefix')) {
                     $route->prefix($locale);
                 }
+                else {
+                    $route->prefix($locale == config('multi-language.default_locale') ? null : $locale);
+                }
+
+
                 if (! is_null($name)) {
                     $route->name($locale.'.'.$name);
                 }

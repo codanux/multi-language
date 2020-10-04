@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'welcome' => '', // default_prefix => false
+    'welcome' => '',
     'home' => 'dashboard',
 
 

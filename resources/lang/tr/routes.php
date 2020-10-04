@@ -1,7 +1,7 @@
 <?php
 
 return [
-    'welcome' => 'tr',
+    'welcome' => '',
     'home' => 'panel',
 
 

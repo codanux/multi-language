@@ -44,7 +44,7 @@ class Post extends Model // implements HasMedia
     // use InteractsWithMedia, MediaTrait { MediaTrait::getMedia insteadof InteractsWithMedia; }
 }
 
-## Database
+## Migration
 
 Schema::create('posts', function (Blueprint $table) {
     $table->id();
@@ -64,10 +64,6 @@ routeLocalized('post.show', $post)
 |----------|---------|---------|-------------------------------------|
 | GET\|HEAD | posts/{post} | en.post.show | App\Http\Controllers\PostController@show |
 | GET\|HEAD | tr/postlar/{post}   | tr.post.show | App\Http\Controllers\PostController@show |
-
-Post::localeSlug('post-1', 'tr')->first() // Post tr
-
-Post::localeSlug('post-1', 'en')->first() // Post en
 
 ## Controller
 
@@ -90,6 +86,10 @@ public function store(Request $request)
        'locale_slug' => 'post-1',
        'translation_of' => $post->translation_of
     ]);
+    
+    Post::localeSlug('post-1', 'tr')->first() // Post tr
+    
+    Post::localeSlug('post-1', 'en')->first() // Post en
 }
 
 public function show(Post $post)

@@ -28,34 +28,19 @@ class RouterMacros
         return function ($type, $name, $action = null) {
             foreach (config('multi-language.locales') as $key => $locale)
             {
-
                 $uri = trans("routes.{$name}", [], $locale);
-                $route = Route::$type($uri, $action);
 
                 if (config('multi-language.default_prefix')) {
-                    $route->prefix($locale);
+                    $uri = "{$locale}/{$uri}";
                 }
-                else {
-                    $route->prefix($locale == config('multi-language.default_locale') ? null : $locale);
+                else if (! ($locale == config('multi-language.default_locale'))) {
+                    $uri = "{$locale}/{$uri}";
                 }
 
+                $route = Route::$type($uri, $action);
 
                 if (! is_null($name)) {
-                    $route->name($locale.'.'.$name);
-                }
-            }
-        };
-    }
-
-    public function localeGet(): Closure
-    {
-        return function ($name, $action = null) {
-            foreach (config('multi-language.locales') as $key => $locale)
-            {
-                $route = Route::get(trans("routes.{$name}", [], $locale), $action);
-                $route->prefix($locale == config('multi-language.default_locale') ? null : $locale);
-                if (! is_null($name)) {
-                    $route->name($locale.'.'.$name);
+                    $route->name("{$locale}.{$name}");
                 }
             }
         };

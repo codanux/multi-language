@@ -213,7 +213,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'index', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -233,7 +233,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'create', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -253,7 +253,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'store', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -275,7 +275,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'show', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -297,7 +297,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'edit', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -319,7 +319,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'update', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -341,7 +341,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'destroy', $options);
 
-        $uri = $this->prefixName($action['as'], $locale);
+        $uri = $this->prefixUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -546,13 +546,15 @@ class MultiLanguageRegistrar
         }
     }
 
-    public function prefixName($as, $locale)
+    public function prefixUri($as, $locale)
     {
+        $uri = trans("routes.{$as}", [], $locale);
+
         if (config('multi-language.default_prefix')) {
-            $uri = $locale.'/'.trans("routes.{$as}", [], $locale);
+            $uri = "{$locale}/{$uri}";
         }
-        else {
-            $uri = ($locale == config('multi-language.default_locale') ? null : $locale).'/'.trans("routes.{$as}", [], $locale);
+        else if (! ($locale == config('multi-language.default_locale'))) {
+            $uri = "{$locale}/{$uri}";
         }
 
         return $uri;

@@ -56,7 +56,9 @@ Schema::create('posts', function (Blueprint $table) {
 
 Route::localeResource('post', 'PostController')->names('post');
 or
-Route::locale('get', 'post.show', 'PostController@show');
+Route::locale('post.show', 'PostController@show'); // Default Get
+
+Route::locale('post.create', 'PostController@store')->method('post');
 
 routeLocalized('post.show', $post)
 
@@ -105,7 +107,6 @@ post.index
 post.show
      @include("multi-language::links", ['translations' => ['post' => $post]])
     // category with translations ['category' => $category, 'post => $post]
-
 
 ```
 

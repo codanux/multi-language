@@ -14,6 +14,12 @@ return [
 
     'default_prefix' => false,
 
+    'jetstream' => [
+        'routes' => false,
+        'stack' => config('jetstream.stack', 'livewire'),
+    ],
+
+
     'media' => [
         'translations_detect' => true, // translations all detect
         'locale' => 'en', // first look locale

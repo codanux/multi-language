@@ -2,13 +2,10 @@
 
 namespace Codanux\MultiLanguage;
 
-use BadMethodCallException;
-use Closure;
+
 use Illuminate\Routing\RouteCollection;
 use Illuminate\Routing\Router;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
-use InvalidArgumentException;
 
 /**
  * @method \Illuminate\Routing\Route get(string $uri, \Closure|array|string|null $action = null)
@@ -26,7 +23,7 @@ use InvalidArgumentException;
  * @method \Illuminate\Routing\RouteRegistrar prefix(string  $prefix)
  * @method \Illuminate\Routing\RouteRegistrar where(array  $where)
  */
-class MultiLanguageRegistrar
+class MultiLanguageResourceRegistrar
 {
     /**
      * The router instance.
@@ -213,7 +210,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'index', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -233,7 +230,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'create', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -253,7 +250,7 @@ class MultiLanguageRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'store', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -275,7 +272,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'show', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -297,7 +294,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'edit', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -319,7 +316,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'update', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -341,7 +338,7 @@ class MultiLanguageRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'destroy', $options);
 
-        $uri = $this->prefixUri($action['as'], $locale);
+        $uri = MultiLanguage::generateUri($action['as'], $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -544,19 +541,5 @@ class MultiLanguageRegistrar
         } else {
             static::$verbs = array_merge(static::$verbs, $verbs);
         }
-    }
-
-    public function prefixUri($as, $locale)
-    {
-        $uri = trans("routes.{$as}", [], $locale);
-
-        if (config('multi-language.default_prefix')) {
-            $uri = "{$locale}/{$uri}";
-        }
-        else if (! ($locale == config('multi-language.default_locale'))) {
-            $uri = "{$locale}/{$uri}";
-        }
-
-        return $uri;
     }
 }

@@ -109,6 +109,34 @@ post.show
 
 ```
 
+## Fortify Router
+
+``` php
+1. config/multi-language.php
+
+'jetstream' => [
+    'routes' => true, // enable
+] 
+
+2.
+
+class FortifyServiceProvider extends ServiceProvider
+{
+    public function register()
+    {
+        Fortify::ignoreRoutes(); // ignore default router
+    }
+}
+
+class JetstreamServiceProvider extends ServiceProvider
+{
+   public function register()
+   {
+       Jetstream::ignoreRoutes(); // ignore default router
+   }
+}
+```
+
 ### Testing
 
 ``` bash

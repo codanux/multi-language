@@ -3,22 +3,24 @@
 namespace Codanux\MultiLanguage;
 
 use Closure;
+use Dotenv\Dotenv;
+use Illuminate\Routing\RouteCollection;
 use Illuminate\Support\Facades\Route;
 
 class RouterMacros
 {
-
     public function localeResource(): Closure
     {
         return function ($name, $controller = null, $options = [])
         {
-            return new MultiLanguageRoutePendingRegistration(
-                $this->container && $this->container->bound(MultiLanguageRegistrar::class)
-                    ? $this->container->make(MultiLanguageRegistrar::class)
-                    : new MultiLanguageRegistrar($this),
-                $name,
-                $controller,
-                $options
+            if ($this->container && $this->container->bound(MultiLanguageResourceRegistrar::class)) {
+                $registrar = $this->container->make(MultiLanguageResourceRegistrar::class);
+            } else {
+                $registrar = new MultiLanguageResourceRegistrar($this);
+            }
+
+            return new MultiLanguagePendingResourceRegistration(
+                $registrar, $name, $controller, $options
             );
         };
     }
@@ -45,4 +47,6 @@ class RouterMacros
             }
         };
     }
+
+
 }

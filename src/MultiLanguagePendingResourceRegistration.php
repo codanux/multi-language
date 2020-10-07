@@ -2,19 +2,17 @@
 
 namespace Codanux\MultiLanguage;
 
-
-use Illuminate\Routing\ResourceRegistrar;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\Macroable;
 
-class MultiLanguageRoutePendingRegistration
+class MultiLanguagePendingResourceRegistration
 {
     use Macroable;
 
     /**
      * The resource registrar.
      *
-     * @var ResourceRegistrar
+     * @var MultiLanguageResourceRegistrar
      */
     protected $registrar;
 
@@ -49,12 +47,12 @@ class MultiLanguageRoutePendingRegistration
     /**
      * Create a new pending resource registration instance.
      *
-     * @param MultiLanguageRegistrar $registrar
+     * @param MultiLanguageResourceRegistrar $registrar
      * @param string $name
      * @param string $controller
      * @param array $options
      */
-    public function __construct(MultiLanguageRegistrar $registrar, $name, $controller, array $options)
+    public function __construct(MultiLanguageResourceRegistrar $registrar, $name, $controller, array $options)
     {
         $this->name = $name;
         $this->options = $options;

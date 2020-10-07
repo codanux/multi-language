@@ -262,7 +262,7 @@ class MultiLanguageRouteRegistrar
             }
 
 
-            if (! key_exists('name', $options['attributes']))
+            if (! key_exists('name', $options['attributes'] ?? []))
             {
                 $route->name("{$locale}.{$name}");
             }

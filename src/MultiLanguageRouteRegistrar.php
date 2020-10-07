@@ -246,25 +246,27 @@ class MultiLanguageRouteRegistrar
 
         foreach (config('multi-language.locales') as $locale)
         {
-            // Register Attributes
-            foreach (data_get($options, 'attributes', []) as $key => $attribute)
-            {
-                if (in_array($key, $this->allowedAttributes)) {
-                    $this->attribute($key, "{$locale}.{$attribute}");
-                }
-            }
-
-            if (! key_exists('as', $this->attributes))
-            {
-                $this->attribute('name', "{$locale}.{$name}");
-            }
-
             // Generate Route
             $uri = MultiLanguage::generateUri($name, $locale);
 
             $method = $options['method'];
 
             $route = $this->registerRoute($method, $uri, $controller);
+
+            // Register Attributes
+            foreach (data_get($options, 'attributes', []) as $key => $attribute)
+            {
+                if (in_array($key, $this->allowedAttributes)) {
+                    $route->{$key}("{$locale}.{$attribute}");
+                }
+            }
+
+
+            if (! key_exists('name', $options['attributes']))
+            {
+                $route->name("{$locale}.{$name}");
+            }
+
 
             $collection->add($route);
         }

@@ -56,16 +56,26 @@ Schema::create('posts', function (Blueprint $table) {
 
 Route::localeResource('post', 'PostController')->names('post');
 or
-Route::locale('post.show', 'PostController@show'); // Default Get
+Route::locale('post.index', 'PostController@index');
+Route::locale('post.show', 'PostController@show');
+Route::locale('post.create', 'PostController@create');
+Route::locale('post.create', 'PostController@store')->method('POST');
+Route::locale('post.edit', 'PostController@edit');
+Route::locale('post.edit', 'PostController@update')->method('PUT');
+Route::locale('post.destroy', 'PostController@destroy')->method('DELETE');
 
-Route::locale('post.create', 'PostController@store')->method('post');
+
+Route::locale('welcome', function () {
+    return view('welcome');
+})
+->name('well')->middleware('api')->withoutMiddleware('web');
 
 routeLocalized('post.show', $post)
 
-| Method   | URI     | Name    | Action                              |
-|----------|---------|---------|-------------------------------------|
-| GET\|HEAD | posts/{post} | en.post.show | App\Http\Controllers\PostController@show |
-| GET\|HEAD | tr/postlar/{post}   | tr.post.show | App\Http\Controllers\PostController@show |
+| Method    | URI           | Name          | Action                              |
+|-----------|---------------|---------------|-------------------------------------|
+| GET\|HEAD | posts/{post}  | en.post.show  | App\Http\Controllers\PostController@show |
+| GET\|HEAD | tr/postlar/{post} | tr.post.show | App\Http\Controllers\PostController@show |
 
 ## Controller
 

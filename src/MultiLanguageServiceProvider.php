@@ -37,13 +37,13 @@ class MultiLanguageServiceProvider extends ServiceProvider
             }
         }
 
-
-        $this->publishes([
-            __DIR__.'/../routes/'.config('jetstream.stack').'.php' => base_path('routes/jetstream.php'),
-        ], 'jetstream-routes');
-
-
         if ($this->app->runningInConsole()) {
+
+            $this->publishes([
+                __DIR__.'/../routes/'.config('jetstream.stack').'.php' => base_path('routes/jetstream.php'),
+            ], 'jetstream-routes');
+
+
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('multi-language.php'),
             ], 'config');
@@ -66,12 +66,13 @@ class MultiLanguageServiceProvider extends ServiceProvider
             // Registering package commands.
             // $this->commands([]);
 
-            $this->publishes([
-                __DIR__ . '/Models/Post/Post.php.stub' => app_path('Models/Post/Post.php'),
-                __DIR__ . '/Models/Post/PostCategory.php.stub' => app_path('Models/Post/PostCategory.php'),
-            ], 'models');
-
             if (! class_exists('CreatePostsTable')) {
+
+                $this->publishes([
+                    __DIR__ . '/Models/Post/Post.php.stub' => app_path('Models/Post/Post.php'),
+                    __DIR__ . '/Models/Post/PostCategory.php.stub' => app_path('Models/Post/PostCategory.php'),
+                ], 'models');
+
 
                 $this->publishes([
                     __DIR__ . '/../database/migrations/create_post_categories_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_post_categories_table.php'),

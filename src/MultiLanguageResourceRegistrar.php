@@ -210,7 +210,7 @@ class MultiLanguageResourceRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'index', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'index');
+        $uri = MultiLanguage::generateUri("{$name}.index", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -230,7 +230,7 @@ class MultiLanguageResourceRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'create', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'create');
+        $uri = MultiLanguage::generateUri("{$name}.create", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -250,7 +250,7 @@ class MultiLanguageResourceRegistrar
     {
         $action = $this->getResourceAction($name, $controller, 'store', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'create');
+        $uri = MultiLanguage::generateUri("{$name}.create", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -272,7 +272,7 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'show', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'show');
+        $uri = MultiLanguage::generateUri("{$name}.show", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -294,7 +294,7 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'edit', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'edit');
+        $uri = MultiLanguage::generateUri("{$name}.edit", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -316,7 +316,7 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'update', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'edit');
+        $uri = MultiLanguage::generateUri("{$name}.edit", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 
@@ -338,7 +338,7 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'destroy', $options);
 
-        $uri = MultiLanguage::generateUri($name, $locale, 'destroy');
+        $uri = MultiLanguage::generateUri("{$name}.destroy", $locale);
 
         $action['as'] = "{$locale}.{$action['as']}";
 

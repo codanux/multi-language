@@ -21,7 +21,7 @@ class ExampleTest extends TestCase
             ],
         ]);
 
-        Route::locale('get', 'welcome', static function () {
+        Route::locale('welcome', function () {
             return "welcome";
         });
 

@@ -65,10 +65,16 @@ Route::locale('post.edit', 'PostController@update')->method('PUT');
 Route::locale('post.destroy', 'PostController@destroy')->method('DELETE');
 
 
-Route::locale('welcome', function () {
-    return view('welcome');
+Route::locale('dashboard', function () {
+    return view('dashboard');
 })
-->name('well')->middleware('api')->withoutMiddleware('web');
+->name('dash')->middleware('auth:web');
+
+Route::group(['localePrefix' => 'admin.prefix'], function (){
+    Route::locale('dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard');
+});
 
 routeLocalized('post.show', $post)
 

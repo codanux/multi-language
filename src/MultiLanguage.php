@@ -4,17 +4,12 @@ namespace Codanux\MultiLanguage;
 
 class MultiLanguage
 {
-    public static function generateUri($name, $locale, $method = null)
+    public static function generateUri(string $name, string $locale, bool $prefix = true)
     {
-        if (is_null($method))
-        {
-            $uri = trans("routes.{$name}", [], $locale);
-        } else {
-            $uri = trans("routes.{$name}.{$method}", [], $locale);
-        }
+        $uri = trans("routes.{$name}", [], $locale);
 
-        if (config('multi-language.default_prefix') ||
-            ! ($locale == config('multi-language.default_locale')))
+        if ($prefix && (config('multi-language.default_prefix') ||
+            ! ($locale == config('multi-language.default_locale'))))
         {
             $uri = "{$locale}/{$uri}";
         }

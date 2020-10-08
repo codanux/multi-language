@@ -71,10 +71,8 @@ return [
     'post' => [
         'index' => 'postlar',
         'create' => 'postlar/yeni',
-        'store' => 'postlar/yeni',
         'show' => 'postlar/{post}',
         'edit' => 'postlar/{post}/duzenle',
-        'update' => 'postlar/{post}/duzenle',
         'destroy' => 'postlar/{post}/sil',
     ],
 ];

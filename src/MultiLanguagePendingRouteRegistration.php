@@ -101,7 +101,7 @@ class MultiLanguagePendingRouteRegistration
 
     public function name($name)
     {
-        $this->options['attributes']['name'] = $name;
+        $this->options['name'] = $name;
 
         return $this;
     }

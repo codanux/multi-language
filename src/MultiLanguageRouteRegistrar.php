@@ -58,7 +58,11 @@ class MultiLanguageRouteRegistrar
      * @var array
      */
     protected $allowedAttributes = [
-        'as', 'domain', 'middleware', 'name', 'namespace', 'prefix', 'where',
+        'as', 'domain', 'middleware', 'excluded_middleware', 'name', 'namespace', 'prefix', 'where',
+    ];
+
+    protected $localeAttributes = [
+        'name',
     ];
 
     /**
@@ -159,7 +163,7 @@ class MultiLanguageRouteRegistrar
      * @param  \Closure|array|string|null  $action
      * @return \Illuminate\Routing\Route
      */
-    protected function registerRoute($method, $uri, $action = null)
+    protected function  registerRoute($method, $uri, $action = null)
     {
         if (! is_array($action)) {
             $action = array_merge($this->attributes, $action ? ['uses' => $action] : []);
@@ -246,27 +250,29 @@ class MultiLanguageRouteRegistrar
 
         foreach (config('multi-language.locales') as $locale)
         {
-            // Generate Route
-            $uri = MultiLanguage::generateUri($name, $locale);
-
-            $method = $options['method'];
-
-            $route = $this->registerRoute($method, $uri, $controller);
+            if (! key_exists('name', $options))
+            {
+                $options['name'] = $name;
+            }
 
             // Register Attributes
-            foreach (data_get($options, 'attributes', []) as $key => $attribute)
+            foreach ($options as $key => $attribute)
             {
-                if (in_array($key, $this->allowedAttributes)) {
-                    $route->{$key}("{$locale}.{$attribute}");
+                if (in_array($key, $this->localeAttributes))
+                {
+                    $this->attribute($key, "{$locale}.{$attribute}");
+                }
+                else {
+                    $this->attribute($key, $attribute);
                 }
             }
 
+            // Generate Route
+            $uri = MultiLanguage::generateUri($name, $locale);
 
-            if (! key_exists('name', $options['attributes'] ?? []))
-            {
-                $route->name("{$locale}.{$name}");
-            }
+            $method = $options['method'] ?? "get";
 
+            $route = $this->registerRoute($method, $uri, $controller);
 
             $collection->add($route);
         }

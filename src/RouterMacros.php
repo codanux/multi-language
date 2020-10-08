@@ -36,8 +36,6 @@ class RouterMacros
                 $registrar = new MultiLanguageRouteRegistrar($this);
             }
 
-            $options['method'] = "GET";
-
             return new MultiLanguagePendingRouteRegistration(
                 $registrar, $name, $controller, $options
             );

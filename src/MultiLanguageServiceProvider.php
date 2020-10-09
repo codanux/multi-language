@@ -3,9 +3,13 @@
 namespace Codanux\MultiLanguage;
 
 use Closure;
+use Codanux\MultiLanguage\View\Components\LinksComponent;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\View\Component;
 
 class MultiLanguageServiceProvider extends ServiceProvider
 {
@@ -14,7 +18,6 @@ class MultiLanguageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-
         Router::mixin(new RouterMacros);
 
         require __DIR__.'/helpers.php';
@@ -37,8 +40,37 @@ class MultiLanguageServiceProvider extends ServiceProvider
             }
         }
 
-        if ($this->app->runningInConsole()) {
+        $this->configureComponents();
+        $this->configurePublishing();
+    }
 
+    /**
+     * Register the application services.
+     */
+    public function register()
+    {
+        // Automatically apply the package configuration
+        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'multi-language');
+
+        // Register the main class to use with the facade
+        $this->app->singleton('multi-language', function () {
+            return new MultiLanguage;
+        });
+
+
+        Blueprint::macro('locale', function () {
+            $this->string('locale');
+            $this->string('locale_slug')->nullable();
+            $this->uuid('translation_of');
+            $this->unique(['locale', 'translation_of']);
+        });
+
+    }
+
+    protected function configurePublishing()
+    {
+        if ($this->app->runningInConsole())
+        {
             if (class_exists(\Laravel\Fortify\Fortify::class))
             {
                 if ($stack = config('multi-language.jetstream.stack', false))
@@ -48,7 +80,6 @@ class MultiLanguageServiceProvider extends ServiceProvider
                     ], 'jetstream-routes');
                 }
             }
-
 
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('multi-language.php'),
@@ -89,26 +120,10 @@ class MultiLanguageServiceProvider extends ServiceProvider
         }
     }
 
-    /**
-     * Register the application services.
-     */
-    public function register()
+    protected function configureComponents()
     {
-        // Automatically apply the package configuration
-        $this->mergeConfigFrom(__DIR__.'/../config/config.php', 'multi-language');
-
-        // Register the main class to use with the facade
-        $this->app->singleton('multi-language', function () {
-            return new MultiLanguage;
+        $this->callAfterResolving(BladeCompiler::class, function () {
+            Blade::component('locale-links', LinksComponent::class);
         });
-
-
-        Blueprint::macro('locale', function () {
-            $this->string('locale');
-            $this->string('locale_slug')->nullable();
-            $this->uuid('translation_of');
-            $this->unique(['locale', 'translation_of']);
-        });
-
     }
 }

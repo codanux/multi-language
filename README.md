@@ -1,4 +1,4 @@
-# Very short description of the package
+# Laravel Multi Language Package
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/codanux/multi-language.svg?style=flat-square)](https://packagist.org/packages/codanux/multi-language)
 [![Build Status](https://img.shields.io/travis/codanux/multi-language/master.svg?style=flat-square)](https://travis-ci.org/codanux/multi-language)

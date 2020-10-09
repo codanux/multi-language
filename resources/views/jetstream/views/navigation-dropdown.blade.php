@@ -16,7 +16,13 @@
                         {{ __('Dashboard') }}
                     </x-jet-nav-link>
 
-                    @include('vendor.multi-language.links')
+                    <div class="hidden  space-x-2 sm:-my-px sm:ml-4 sm:flex">
+                        @foreach(config('multi-language.locales') as $locale)
+                            <x-jet-nav-link href="{{ generateLink($locale, $translations ?? [])  }}">
+                                {{ \Illuminate\Support\Str::upper($locale) }}
+                            </x-jet-nav-link>
+                        @endforeach
+                    </div>
                 </div>
             </div>
 

@@ -126,7 +126,7 @@ post.show
 
 ```
 
-## Fortify Router
+## Jetstream Router
 
 ``` php
 1. config/multi-language.php

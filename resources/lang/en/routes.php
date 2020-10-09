@@ -29,34 +29,34 @@ return [
 
 
     'profile' => [
-        'show' => '/user/profile',
+        'show' => 'user/profile',
     ],
     'api-tokens' => [
-        'index' => '/user/api-tokens',
-        'store' => '/user/api-tokens',
-        'update' => '/user/api-tokens/{token}',
-        'destroy' => '/user/api-tokens/{token}',
+        'index' => 'user/api-tokens',
+        'store' => 'user/api-tokens',
+        'update' => 'user/api-tokens/{token}',
+        'destroy' => 'user/api-tokens/{token}',
     ],
     'teams' => [
-        'create' => '/teams/create',
-        'store' => '/teams',
-        'show' => '/teams/{team}',
-        'update' => '/teams/{team}',
-        'destroy' => '/teams/{team}',
+        'create' => 'teams/create',
+        'store' => 'teams',
+        'show' => 'teams/{team}',
+        'update' => 'teams/{team}',
+        'destroy' => 'teams/{team}',
     ],
 
     'team-members' => [
-        'store' => '/teams/{team}/members',
-        'update' => '/teams/{team}/members/{user}',
-        'destroy' => '/teams/{team}/members/{user}',
+        'store' => 'teams/{team}/members',
+        'update' => 'teams/{team}/members/{user}',
+        'destroy' => 'teams/{team}/members/{user}',
     ],
 
     'current-team' => [
-        'update' => '/current-team',
+        'update' => 'current-team',
     ],
 
     'other-browser-sessions' => [
-        'destroy' => '/user/other-browser-sessions',
+        'destroy' => 'user/other-browser-sessions',
     ],
 
     'current-user' => [
@@ -64,7 +64,7 @@ return [
     ],
 
     'current-user-photo' => [
-        'destroy' => '/user/profile-photo',
+        'destroy' => 'user/profile-photo',
 
     ],
 

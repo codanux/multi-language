@@ -27,7 +27,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'multi-language');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        if (class_exists(\Laravel\Fortify\Fortify::class) && config('multi-language.jetstream.routes'))
+        if (class_exists(\Laravel\Fortify\Fortify::class) && config('multi-language.jetstream.routes', false))
         {
             $this->loadRoutesFrom(__DIR__.'/../routes/fortify.php');
 
@@ -39,9 +39,15 @@ class MultiLanguageServiceProvider extends ServiceProvider
 
         if ($this->app->runningInConsole()) {
 
-            $this->publishes([
-                __DIR__.'/../routes/'.config('jetstream.stack').'.php' => base_path('routes/jetstream.php'),
-            ], 'jetstream-routes');
+            if (class_exists(\Laravel\Fortify\Fortify::class))
+            {
+                if ($stack = config('multi-language.jetstream.stack', false))
+                {
+                    $this->publishes([
+                        __DIR__.'/../routes/'.config('jetstream.stack').'.php' => base_path('routes/multi-language/jetstream.php'),
+                    ], 'jetstream-routes');
+                }
+            }
 
 
             $this->publishes([

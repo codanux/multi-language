@@ -19,128 +19,129 @@ use Laravel\Fortify\Http\Controllers\TwoFactorQrCodeController;
 use Laravel\Fortify\Http\Controllers\VerifyEmailController;
 
 
-foreach(config('multi-language.locales') as $locale)
-{
-    Route::prefix($locale == config('multi-language.default_locale') ? null : $locale)
-        ->name($locale.'.')
-        ->group(function() use($locale) {
 
-        Route::group(['middleware' => config('fortify.middleware', ['web'])], function () use ($locale) {
-            // Authentication...
-            Route::get(trans("routes.login", [], $locale), [AuthenticatedSessionController::class, 'create'])
-                ->middleware(['guest'])
-                ->name('login');
+Route::group(['middleware' => config('fortify.middleware', ['web'])], function () {
+    // Authentication...
+    Route::locale("login", [AuthenticatedSessionController::class, 'create'])
+        ->middleware(['guest'])
+        ->name('login');
 
-            $limiter = config('fortify.limiters.login');
+    $limiter = config('fortify.limiters.login');
 
-            Route::post(trans("routes.login", [], $locale), [AuthenticatedSessionController::class, 'store'])
-                ->middleware(array_filter([
-                    'guest',
-                    $limiter ? 'throttle:' . $limiter : null,
-                ]));
+    Route::locale("login", [AuthenticatedSessionController::class, 'store'])
+        ->middleware(array_filter([
+            'guest',
+            $limiter ? 'throttle:' . $limiter : null,
+        ]))->method('post');
 
-            Route::post(trans("routes.logout", [], $locale), [AuthenticatedSessionController::class, 'destroy'])
-                ->name('logout');
+    Route::locale("logout", [AuthenticatedSessionController::class, 'destroy'])
+        ->name('logout')
+        ->method('post');;
 
-            // Password Reset...
-            if (Features::enabled(Features::resetPasswords())) {
-                Route::get(trans("routes.password.request", [], $locale), [PasswordResetLinkController::class, 'create'])
-                    ->middleware(['guest'])
-                    ->name('password.request');
+    // Password Reset...
+    if (Features::enabled(Features::resetPasswords())) {
+        Route::locale("password.request", [PasswordResetLinkController::class, 'create'])
+            ->middleware(['guest'])
+            ->name('password.request');
 
-                Route::post(trans("routes.password.email", [], $locale), [PasswordResetLinkController::class, 'store'])
-                    ->middleware(['guest'])
-                    ->name('password.email');
+        Route::locale("password.email", [PasswordResetLinkController::class, 'store'])
+            ->middleware(['guest'])
+            ->name('password.email')
+            ->method('post');
 
-                Route::get(trans("routes.password.reset", [], $locale), [NewPasswordController::class, 'create'])
-                    ->middleware(['guest'])
-                    ->name('password.reset');
+        Route::locale("password.reset", [NewPasswordController::class, 'create'])
+            ->middleware(['guest'])
+            ->name('password.reset');
 
-                Route::post(trans("routes.password.update", [], $locale), [NewPasswordController::class, 'store'])
-                    ->middleware(['guest'])
-                    ->name('password.update');
-            }
+        Route::locale("password.update", [NewPasswordController::class, 'store'])
+            ->middleware(['guest'])
+            ->name('password.update')
+            ->method('post');
+    }
 
-            // Registration...
-            if (Features::enabled(Features::registration())) {
-                Route::get(trans("routes.register", [], $locale), [RegisteredUserController::class, 'create'])
-                    ->middleware(['guest'])
-                    ->name('register');
+    // Registration...
+    if (Features::enabled(Features::registration())) {
+        Route::locale("register", [RegisteredUserController::class, 'create'])
+            ->middleware(['guest'])
+            ->name('register');
 
-                Route::post(trans("routes.register", [], $locale), [RegisteredUserController::class, 'store'])
-                    ->middleware(['guest']);
-            }
+        Route::locale("register", [RegisteredUserController::class, 'store'])
+            ->middleware(['guest'])
+            ->method('post');
+    }
 
-            // Email Verification...
-            if (Features::enabled(Features::emailVerification())) {
-                Route::get(trans("routes.verification.notice", [], $locale), [EmailVerificationPromptController::class, '__invoke'])
-                    ->middleware(['auth'])
-                    ->name('verification.notice');
+    // Email Verification...
+    if (Features::enabled(Features::emailVerification())) {
+        Route::locale("verification.notice", [EmailVerificationPromptController::class, '__invoke'])
+            ->middleware(['auth'])
+            ->name('verification.notice');
 
-                Route::get(trans("routes.verification.verify", [], $locale), [VerifyEmailController::class, '__invoke'])
-                    ->middleware(['auth', 'signed', 'throttle:6,1'])
-                    ->name('verification.verify');
+        Route::locale("verification.verify", [VerifyEmailController::class, '__invoke'])
+            ->middleware(['auth', 'signed', 'throttle:6,1'])
+            ->name('verification.verify');
 
-                Route::post(trans("routes.verification.send", [], $locale), [EmailVerificationNotificationController::class, 'store'])
-                    ->middleware(['auth', 'throttle:6,1'])
-                    ->name('verification.send');
-            }
+        Route::locale("verification.send", [EmailVerificationNotificationController::class, 'store'])
+            ->middleware(['auth', 'throttle:6,1'])
+            ->name('verification.send')
+            ->method('post');
+    }
 
-            // Profile Information...
-            if (Features::enabled(Features::updateProfileInformation())) {
-                Route::put(trans("routes.user-profile-information.update", [], $locale), [ProfileInformationController::class, 'update'])
-                    ->middleware(['auth'])
-                    ->name('user-profile-information.update');
-            }
+    // Profile Information...
+    if (Features::enabled(Features::updateProfileInformation())) {
+        Route::locale("user-profile-information.update", [ProfileInformationController::class, 'update'])
+            ->middleware(['auth'])
+            ->name('user-profile-information.update')
+            ->method('put');;
+    }
 
-            // Passwords...
-            if (Features::enabled(Features::updatePasswords())) {
-                Route::put(trans("routes.user-password.update", [], $locale), [PasswordController::class, 'update'])
-                    ->middleware(['auth'])
-                    ->name('user-password.update');
-            }
+    // Passwords...
+    if (Features::enabled(Features::updatePasswords())) {
+        Route::locale("user-password.update", [PasswordController::class, 'update'])
+            ->middleware(['auth'])
+            ->name('user-password.update')
+            ->method('put');;
+    }
 
-            // Password Confirmation...
-            Route::get(trans("routes.password.confirm", [], $locale), [ConfirmablePasswordController::class, 'show'])
-                ->middleware(['auth'])
-                ->name('password.confirm');
+    // Password Confirmation...
+    Route::locale("password.confirm", [ConfirmablePasswordController::class, 'show'])
+        ->middleware(['auth'])
+        ->name('password.confirm');
 
-            Route::post(trans("routes.password.confirm", [], $locale), [ConfirmablePasswordController::class, 'store'])
-                ->middleware(['auth']);
+    Route::locale("password.confirm", [ConfirmablePasswordController::class, 'store'])
+        ->middleware(['auth'])
+        ->method('post');;
 
-            Route::get(trans("routes.password.confirmation", [], $locale), [ConfirmedPasswordStatusController::class, 'show'])
-                ->middleware(['auth'])
-                ->name('password.confirmation');
+    Route::locale("password.confirmation", [ConfirmedPasswordStatusController::class, 'show'])
+        ->middleware(['auth'])
+        ->name('password.confirmation');
 
-            // Two Factor Authentication...
-            if (Features::enabled(Features::twoFactorAuthentication())) {
-                Route::get(trans("routes.two-factor.login", [], $locale), [TwoFactorAuthenticatedSessionController::class, 'create'])
-                    ->middleware(['guest'])
-                    ->name('two-factor.login');
+    // Two Factor Authentication...
+    if (Features::enabled(Features::twoFactorAuthentication())) {
+        Route::locale("two-factor.login", [TwoFactorAuthenticatedSessionController::class, 'create'])
+            ->middleware(['guest'])
+            ->name('two-factor.login');
 
-                Route::post(trans("routes.two-factor.login", [], $locale), [TwoFactorAuthenticatedSessionController::class, 'store'])
-                    ->middleware(['guest']);
+        Route::locale("two-factor.login", [TwoFactorAuthenticatedSessionController::class, 'store'])
+            ->middleware(['guest'])
+            ->method('post');;
 
-                $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
-                    ? ['auth', 'password.confirm']
-                    : ['auth'];
+        $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
+            ? ['auth', 'password.confirm']
+            : ['auth'];
 
-                Route::post('/user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])
-                    ->middleware($twoFactorMiddleware);
+        Route::post('/user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'store'])
+            ->middleware($twoFactorMiddleware);
 
-                Route::delete('/user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])
-                    ->middleware($twoFactorMiddleware);
+        Route::delete('/user/two-factor-authentication', [TwoFactorAuthenticationController::class, 'destroy'])
+            ->middleware($twoFactorMiddleware);
 
-                Route::get('/user/two-factor-qr-code', [TwoFactorQrCodeController::class, 'show'])
-                    ->middleware($twoFactorMiddleware);
+        Route::get('/user/two-factor-qr-code', [TwoFactorQrCodeController::class, 'show'])
+            ->middleware($twoFactorMiddleware);
 
-                Route::get('/user/two-factor-recovery-codes', [RecoveryCodeController::class, 'index'])
-                    ->middleware($twoFactorMiddleware);
+        Route::get('/user/two-factor-recovery-codes', [RecoveryCodeController::class, 'index'])
+            ->middleware($twoFactorMiddleware);
 
-                Route::post('/user/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
-                    ->middleware($twoFactorMiddleware);
-            }
-        });
-
-    });
-}
+        Route::post('/user/two-factor-recovery-codes', [RecoveryCodeController::class, 'store'])
+            ->middleware($twoFactorMiddleware);
+    }
+});

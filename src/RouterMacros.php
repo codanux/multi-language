@@ -43,4 +43,24 @@ class RouterMacros
     }
 
 
+
+    public function hasLocale() :Closure
+    {
+        return function ($name, $locale = null)
+        {
+            if (is_null($locale))
+                $locale = app()->getLocale();
+
+            $names = is_array($name) ? $name : func_get_args();
+
+            foreach ($names as $key => $name)
+            {
+                if (! $this->routes->hasNamedRoute("{$locale}.{$name}")) {
+                    return false;
+                }
+            }
+            return true;
+        };
+    }
+
 }

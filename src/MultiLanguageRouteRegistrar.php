@@ -281,5 +281,4 @@ class MultiLanguageRouteRegistrar
 
         return $collection;
     }
-
 }

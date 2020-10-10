@@ -1,11 +1,11 @@
 <?php
 
-namespace Codanux\MultiLanguage;
+namespace Codanux\MultiLanguage\Macros;
 
 use Closure;
-use Dotenv\Dotenv;
-use Illuminate\Routing\RouteCollection;
-use Illuminate\Support\Facades\Route;
+use Codanux\MultiLanguage\MultiLanguagePendingRouteRegistration;
+use Codanux\MultiLanguage\MultiLanguageResourceRegistrar;
+use Codanux\MultiLanguage\MultiLanguageRouteRegistrar;
 
 class RouterMacros
 {

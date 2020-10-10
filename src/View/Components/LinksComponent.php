@@ -7,6 +7,22 @@ use Illuminate\View\Component;
 class LinksComponent extends Component
 {
     /**
+     * @var array
+     */
+    public $translations;
+
+    /**
+     * @var string
+     */
+    public $component;
+
+    public function __construct($translations = [], $component = "jet-nav-link")
+    {
+        $this->translations = $translations;
+        $this->component = $component;
+    }
+
+    /**
      * Get the view / contents that represents the component.
      *
      * @return \Illuminate\View\View

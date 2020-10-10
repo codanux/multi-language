@@ -2,14 +2,13 @@
 
 namespace Codanux\MultiLanguage;
 
-use Closure;
+use Codanux\MultiLanguage\Macros\RouterMacros;
 use Codanux\MultiLanguage\View\Components\LinksComponent;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
-use Illuminate\View\Component;
 
 class MultiLanguageServiceProvider extends ServiceProvider
 {
@@ -18,10 +17,6 @@ class MultiLanguageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Router::mixin(new RouterMacros);
-
-        require __DIR__.'/helpers.php';
-
         /*
          * Optional methods to load your package assets
          */
@@ -30,13 +25,16 @@ class MultiLanguageServiceProvider extends ServiceProvider
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'multi-language');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
-        if (class_exists(\Laravel\Fortify\Fortify::class) && config('multi-language.jetstream.routes', false))
-        {
-            $this->loadRoutesFrom(__DIR__.'/../routes/fortify.php');
+        if (class_exists(\Laravel\Fortify\Fortify::class)) {
 
-            if ($stack = config('multi-language.jetstream.stack', false))
+            if (config('multi-language.router.fortify.routes', false))
             {
-                $this->loadRoutesFrom(__DIR__.'/../routes/'.$stack.'.php');
+                $this->loadRoutesFrom(__DIR__.'/../routes/fortify.php');
+            }
+
+            if (config('multi-language.router.jetstream.routes', false))
+            {
+                $this->loadRoutesFrom(__DIR__.'/../routes/'.config('multi-language.router.jetstream.stack', 'livewire').'.php');
             }
         }
 
@@ -58,13 +56,16 @@ class MultiLanguageServiceProvider extends ServiceProvider
         });
 
 
+        Router::mixin(new RouterMacros);
+
+        require __DIR__.'/helpers.php';
+
         Blueprint::macro('locale', function () {
             $this->string('locale');
             $this->string('locale_slug')->nullable();
             $this->uuid('translation_of');
             $this->unique(['locale', 'translation_of']);
         });
-
     }
 
     protected function configurePublishing()
@@ -73,11 +74,15 @@ class MultiLanguageServiceProvider extends ServiceProvider
         {
             if (class_exists(\Laravel\Fortify\Fortify::class))
             {
-                if ($stack = config('multi-language.jetstream.stack', false))
+                $this->publishes([
+                    __DIR__.'/../routes/fortify.php' => base_path('routes/multi-language/fortify.php'),
+                ], 'multi-language-fortify');
+
+                if ($stack = config('multi-language.router.jetstream.stack', false))
                 {
                     $this->publishes([
-                        __DIR__.'/../routes/'.config('jetstream.stack').'.php' => base_path('routes/multi-language/jetstream.php'),
-                    ], 'jetstream-routes');
+                        __DIR__.'/../routes/'.config('multi-language.router.jetstream.stack').'.php' => base_path('routes/multi-language/jetstream.php'),
+                    ], 'multi-language-jetstream');
                 }
             }
 

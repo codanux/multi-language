@@ -131,17 +131,21 @@ post.show
 ``` php
 1. config/multi-language.php
 
-'jetstream' => [
-    'routes' => true, // enable
-] 
+'fortify' => [
+    'routes' => true,
+],
 
-2.
+'jetstream' => [
+    'routes' => true,
+]
+
+2. Default Router İgnore
 
 class FortifyServiceProvider extends ServiceProvider
 {
     public function register()
     {
-        Fortify::ignoreRoutes(); // ignore default router
+        Fortify::ignoreRoutes();
     }
 }
 
@@ -149,7 +153,7 @@ class JetstreamServiceProvider extends ServiceProvider
 {
    public function register()
    {
-       Jetstream::ignoreRoutes(); // ignore default router
+       Jetstream::ignoreRoutes();
    }
 }
 ```

@@ -17,6 +17,7 @@ class CreatePostsTable extends Migration
             $table->uuid('category_translation_of');
             $table->bigIncrements('id');
             $table->string('name');
+            $table->text('body')->nullable();
             $table->locale();
             $table->timestamps();
         });

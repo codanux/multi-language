@@ -2,14 +2,16 @@
 
 namespace Codanux\MultiLanguage;
 
+use Codanux\MultiLanguage\Macros\RedirectMacros;
 use Codanux\MultiLanguage\Macros\RequestMacros;
 use Codanux\MultiLanguage\Macros\RouterMacros;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
-use Illuminate\Support\Facades\Request;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\View\Compilers\BladeCompiler;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Redirect;
 
 class MultiLanguageServiceProvider extends ServiceProvider
 {
@@ -61,6 +63,8 @@ class MultiLanguageServiceProvider extends ServiceProvider
         Router::mixin(new RouterMacros);
 
         Request::mixin(new RequestMacros);
+
+        Redirect::mixin(new RedirectMacros);
 
         require __DIR__.'/helpers.php';
 

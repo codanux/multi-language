@@ -3,7 +3,6 @@
 namespace Codanux\MultiLanguage;
 
 use Codanux\MultiLanguage\Macros\RouterMacros;
-use Codanux\MultiLanguage\View\Components\LinksComponent;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
@@ -128,7 +127,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
     protected function configureComponents()
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
-            Blade::component('locale-links', LinksComponent::class);
+            Blade::component('multi-language::components.links', 'locale-links');
         });
     }
 }

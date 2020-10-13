@@ -23,6 +23,11 @@ return [
         ],
     ],
 
+    'middleware' => [
+        'web' => [
+            \Codanux\MultiLanguage\DetectRequestLocale::class
+        ]
+    ],
 
     'media' => [
         'translations_detect' => true, // translations all detect

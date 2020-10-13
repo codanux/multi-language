@@ -5,6 +5,7 @@ namespace Codanux\MultiLanguage;
 use Codanux\MultiLanguage\Macros\RedirectMacros;
 use Codanux\MultiLanguage\Macros\RequestMacros;
 use Codanux\MultiLanguage\Macros\RouterMacros;
+use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Blade;
@@ -43,6 +44,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
 
         $this->configureComponents();
         $this->configurePublishing();
+        $this->bootMiddleware();
     }
 
     /**
@@ -138,5 +140,18 @@ class MultiLanguageServiceProvider extends ServiceProvider
         $this->callAfterResolving(BladeCompiler::class, function () {
             Blade::component('multi-language::components.links', 'locale-links');
         });
+    }
+
+    protected function bootMiddleware()
+    {
+        $kernel = $this->app->make(Kernel::class);
+
+        foreach (config('multi-language.middleware', []) as $key => $middlewares)
+        {
+            foreach ($middlewares as $middleware)
+            {
+                $kernel->appendMiddlewareToGroup($key, $middleware);
+            }
+        }
     }
 }

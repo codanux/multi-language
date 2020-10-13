@@ -22,15 +22,16 @@ composer require codanux/multi-language
 php artisan vendor:publish --provider="Codanux\MultiLanguage\MultiLanguageServiceProvider"
 ```
 
-To detect and change the locale of the application based on the request automatically, you can add the middleware to your `app/Http/Kernel`:
+To detect and change the locale of the application based on the request automatically:
 
 ``` php
-protected $middlewareGroups = [
+config/multi-language.php
+
+'middleware' => [
     'web' => [
-        \Codanux\MultiLanguage\DetectRequestLocale::class,
-        // ...
+        \Codanux\MultiLanguage\DetectRequestLocale::class
     ]
-];
+],
 ```
 
 ## Usage

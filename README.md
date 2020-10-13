@@ -34,27 +34,27 @@ config/multi-language.php
 ],
 ```
 
-## Usage
-
-``` php
 ## Model
 
+``` php
 class Post extends Model // implements HasMedia
 {
     use HasLanguage;
     // use InteractsWithMedia, MediaTrait { MediaTrait::getMedia insteadof InteractsWithMedia; }
 }
+```
 
 ## Migration
-
+``` php
 Schema::create('posts', function (Blueprint $table) {
     $table->id();
     $table->string('name');
     $table->locale(); // added
 });
+```
 
 ## Route
-
+``` php
 Route::localeResource('post', 'PostController')->names('post');
 or
 Route::locale('post.index', 'PostController@index');
@@ -69,23 +69,32 @@ Route::locale('post.destroy', 'PostController@destroy')->method('DELETE');
 Route::locale('dashboard', function () {
     return view('dashboard');
 })
-->name('dash')->middleware('auth:web');
+->name('home'); // default dashboard name
+
 
 Route::group(['localePrefix' => 'admin.prefix'], function (){
+
     Route::locale('dashboard', function () {
         return view('admin.dashboard');
-    })->name('admin.dashboard');
-});
+    })
+    ->name('admin.dashboard');
 
+});
+```
+
+## Route Usage
+
+``` php
 routeLocalized('post.show', $post)
 
 | Method    | URI           | Name          | Action                              |
 |-----------|---------------|---------------|-------------------------------------|
 | GET\|HEAD | posts/{post}  | en.post.show  | App\Http\Controllers\PostController@show |
 | GET\|HEAD | tr/postlar/{post} | tr.post.show | App\Http\Controllers\PostController@show |
+```
 
 ## Controller
-
+``` php
 public function index()
 {
     // locale scope
@@ -115,16 +124,19 @@ public function show(Post $post)
 {
     return view('post.show', compact('post'));
 }
+```
 
 ## Views
-
+``` php
 post.index
-    @include("multi-language::links")
+    <x-locale-links component="jet-nav-link"></x-locale-links>
 
 post.show
-     @include("multi-language::links", ['translations' => ['post' => $post]])
-    // category with translations ['category' => $category, 'post => $post]
+    <x-locale-links :translations=['post' => $post]></x-locale-links>
+    
+    //category/{category}/posts/{post}
 
+    // route model translations ['category' => $category, 'post => $post]
 ```
 
 ## Jetstream Router

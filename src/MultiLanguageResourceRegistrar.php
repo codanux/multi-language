@@ -462,6 +462,10 @@ class MultiLanguageResourceRegistrar
             $action['where'] = $options['wheres'];
         }
 
+        if (isset($options['parents']) && isset($options['parents'][$name])) {
+            $action['parent'] = $options['parents'][$name];
+        }
+
         return $action;
     }
 

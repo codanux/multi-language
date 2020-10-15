@@ -58,7 +58,7 @@ class MultiLanguageRouteRegistrar
      * @var array
      */
     protected $allowedAttributes = [
-        'middleware', 'excluded_middleware', 'method', 'name', 'prefix'
+        'middleware', 'excluded_middleware', 'method', 'name', 'prefix', 'parent'
     ];
 
     protected $localeAttributes = [

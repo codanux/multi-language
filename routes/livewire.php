@@ -22,7 +22,7 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         if (Jetstream::hasTeamFeatures()) {
             Route::locale("teams.create", [TeamController::class, 'create'])->name('teams.create');
             Route::locale("teams.show", [TeamController::class, 'show'])->name('teams.show');
-            Route::locale("current-team.update", [CurrentTeamController::class, 'update'])->name('current-team.update')
+            Route::locale("current-team.edit", [CurrentTeamController::class, 'update'])->name('current-team.update')
             ->method('put');
         }
     });

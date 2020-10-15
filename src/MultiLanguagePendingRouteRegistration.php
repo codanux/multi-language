@@ -113,6 +113,20 @@ class MultiLanguagePendingRouteRegistration
         return $this;
     }
 
+    public function parent($name)
+    {
+        $this->options['parent'] = $name;
+
+        return $this;
+    }
+
+    public function parents($name)
+    {
+        $this->options['parents'] = $name;
+
+        return $this;
+    }
+
     /**
      * Set the route name for a controller action.
      *

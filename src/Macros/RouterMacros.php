@@ -42,8 +42,6 @@ class RouterMacros
         };
     }
 
-
-
     public function hasLocale() :Closure
     {
         return function ($name, $locale = null)

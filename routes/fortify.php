@@ -53,7 +53,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
             ->middleware(['guest'])
             ->name('password.reset');
 
-        Route::locale("password.update", [NewPasswordController::class, 'store'])
+        Route::locale("password.edit", [NewPasswordController::class, 'store'])
             ->middleware(['guest'])
             ->name('password.update')
             ->method('post');
@@ -96,7 +96,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 
     // Passwords...
     if (Features::enabled(Features::updatePasswords())) {
-        Route::locale("user-password.update", [PasswordController::class, 'update'])
+        Route::locale("user-password.edit", [PasswordController::class, 'update'])
             ->middleware(['auth'])
             ->name('user-password.update')
             ->method('put');;

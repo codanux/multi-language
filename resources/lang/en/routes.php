@@ -12,7 +12,7 @@ return [
         'request' => 'forgot-password',
         'email' => 'forgot-password',
         'reset' => 'reset-password/{token}',
-        'update' => 'reset-password',
+        'edit' => 'reset-password',
         'confirm' => 'user/confirm-password',
         'confirmation' => 'user/confirmed-password-status',
     ],
@@ -33,26 +33,25 @@ return [
     ],
     'api-tokens' => [
         'index' => 'user/api-tokens',
-        'store' => 'user/api-tokens',
-        'update' => 'user/api-tokens/{token}',
+        'create' => 'user/api-tokens',
+        'edit' => 'user/api-tokens/{token}',
         'destroy' => 'user/api-tokens/{token}',
     ],
     'teams' => [
         'create' => 'teams/create',
-        'store' => 'teams',
         'show' => 'teams/{team}',
-        'update' => 'teams/{team}',
+        'edit' => 'teams/{team}',
         'destroy' => 'teams/{team}',
     ],
 
     'team-members' => [
-        'store' => 'teams/{team}/members',
-        'update' => 'teams/{team}/members/{user}',
+        'create' => 'teams/{team}/members',
+        'edit' => 'teams/{team}/members/{user}',
         'destroy' => 'teams/{team}/members/{user}',
     ],
 
     'current-team' => [
-        'update' => 'current-team',
+        'edit' => 'current-team',
     ],
 
     'other-browser-sessions' => [

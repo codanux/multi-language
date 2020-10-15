@@ -28,45 +28,42 @@ return [
     ],
 
     'profile' => [
-        'show' => 'user/profile',
+        'show' => 'kullanici/profil',
     ],
     'api-tokens' => [
-        'index' => 'user/api-tokens',
-        'store' => 'user/api-tokens',
-        'update' => 'user/api-tokens/{token}',
-        'destroy' => 'user/api-tokens/{token}',
+        'index' => 'kullanici/api-tokens',
+        'create' => 'kullanici/api-tokens',
+        'update' => 'kullanici/api-tokens/{token}',
+        'destroy' => 'kullanici/api-tokens/{token}',
     ],
     'teams' => [
-        'create' => 'teams/create',
-        'store' => 'teams',
-        'show' => 'teams/{team}',
-        'update' => 'teams/{team}',
-        'destroy' => 'teams/{team}',
+        'create' => 'takim/yeni',
+        'show' => 'takim/{team}',
+        'edit' => 'takim/{team}',
+        'destroy' => 'takim/{team}',
     ],
 
     'team-members' => [
-        'store' => 'teams/{team}/members',
-        'update' => 'teams/{team}/members/{user}',
-        'destroy' => 'teams/{team}/members/{user}',
+        'create' => 'takim/{team}/uyeler',
+        'edit' => 'takim/{team}/uyeler/{user}',
+        'destroy' => 'takim/{team}/uyeler/{user}',
     ],
 
     'current-team' => [
-        'update' => 'current-team',
+        'edit' => 'oldugun-takim',
     ],
 
     'other-browser-sessions' => [
-        'destroy' => 'user/other-browser-sessions',
+        'destroy' => 'kullanici/diğer-browser-sessions',
     ],
 
     'current-user' => [
-        'destroy' => 'user'
+        'destroy' => 'kullanici'
     ],
 
     'current-user-photo' => [
-        'destroy' => 'user/profile-photo',
-
+        'destroy' => 'kullanici/profile-photo',
     ],
-
 
     'post' => [
         'index' => 'postlar',

@@ -33,21 +33,21 @@ Route::group(['middleware' => config('jetstream.middleware', ['web'])], function
         // API...
         if (Jetstream::hasApiFeatures()) {
             Route::locale("api-tokens.index", [ApiTokenController::class, 'index'])->name('api-tokens.index');
-            Route::locale("api-tokens.store", [ApiTokenController::class, 'store'])->name('api-tokens.store')->method("post");
-            Route::locale("api-tokens.update", [ApiTokenController::class, 'update'])->name('api-tokens.update')->method("put");
+            Route::locale("api-tokens.create", [ApiTokenController::class, 'store'])->name('api-tokens.store')->method("post");
+            Route::locale("api-tokens.edit", [ApiTokenController::class, 'update'])->name('api-tokens.update')->method("put");
             Route::locale("api-tokens.destroy", [ApiTokenController::class, 'destroy'])->name('api-tokens.destroy')->method("delete");
         }
 
         // Teams...
         if (Jetstream::hasTeamFeatures()) {
             Route::locale("teams.create",  [TeamController::class, 'create'])->name('teams.create');
-            Route::locale("teams.store",  [TeamController::class, 'store'])->name('teams.store')->method("post");
+            Route::locale("teams.create",  [TeamController::class, 'store'])->name('teams.store')->method("post");
             Route::locale("teams.show",  [TeamController::class, 'show'])->name('teams.show');
-            Route::locale("teams.update",  [TeamController::class, 'update'])->name('teams.update')->method("put");
+            Route::locale("teams.edit",  [TeamController::class, 'update'])->name('teams.update')->method("put");
             Route::locale("teams.destroy",  [TeamController::class, 'destroy'])->name('teams.destroy')->method("delete");
-            Route::locale("current-team.update",  [CurrentTeamController::class, 'update'])->name('current-team.update')->method("put");
-            Route::locale("team-members.store",  [TeamMemberController::class, 'store'])->name('team-members.store')->method("post");
-            Route::locale("team-members.update",  [TeamMemberController::class, 'update'])->name('team-members.update')->method("put");
+            Route::locale("current-team.edit",  [CurrentTeamController::class, 'update'])->name('current-team.update')->method("put");
+            Route::locale("team-members.create",  [TeamMemberController::class, 'store'])->name('team-members.store')->method("post");
+            Route::locale("team-members.edit",  [TeamMemberController::class, 'update'])->name('team-members.update')->method("put");
             Route::locale("team-members.destroy",  [TeamMemberController::class, 'destroy'])->name('team-members.destroy')->method("delete");
         }
     });

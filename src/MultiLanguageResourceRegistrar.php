@@ -3,9 +3,10 @@
 namespace Codanux\MultiLanguage;
 
 
-use Illuminate\Routing\RouteCollection;
+
 use Illuminate\Routing\Router;
 use Illuminate\Support\Str;
+use InvalidArgumentException;
 
 /**
  * @method \Illuminate\Routing\Route get(string $uri, \Closure|array|string|null $action = null)
@@ -104,7 +105,6 @@ class MultiLanguageResourceRegistrar
             return;
         }
 
-
         // We need to extract the base resource from the resource name. Nested resources
         // are supported in the framework, but we need to know what name to use for a
         // place-holder on the route parameters, which should be the base resources.
@@ -112,27 +112,18 @@ class MultiLanguageResourceRegistrar
 
         $defaults = $this->resourceDefaults;
 
-        $collection = new RouteCollection;
+        foreach ($this->getResourceMethods($defaults, $options) as $m) {
 
+            $route = $this->{'addResource'.ucfirst($m)}(
+                $name, $base, $controller, $options
+            );
 
-        foreach (config('multi-language.locales') as $locale)
-        {
-            foreach ($this->getResourceMethods($defaults, $options) as $m) {
-
-                $route = $this->{'addResource'.ucfirst($m)}(
-                    $name, $base, $controller, $options, $locale
-                );
-
-                if (isset($options['bindingFields'])) {
-                    $this->setResourceBindingFields($route, $options['bindingFields']);
-                }
-
-                $collection->add($route);
+            if (isset($options['bindingFields'])) {
+                $this->setResourceBindingFields($route, $options['bindingFields']);
             }
+
         }
 
-
-        return $collection;
     }
 
     /**
@@ -206,15 +197,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceIndex($name, $base, $controller, $options, $locale)
+    protected function addResourceIndex($name, $base, $controller, $options)
     {
+        // $uri = $this->getResourceUri($name);
+
         $action = $this->getResourceAction($name, $controller, 'index', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.index", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->get($uri, $action);
+        return $this->router->locale("{$name}.index", $action)->name($action['name']);
     }
 
     /**
@@ -226,15 +215,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceCreate($name, $base, $controller, $options, $locale)
+    protected function addResourceCreate($name, $base, $controller, $options)
     {
+        // $uri = $this->getResourceUri($name);
+
         $action = $this->getResourceAction($name, $controller, 'create', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.create", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->get($uri, $action);
+        return $this->router->locale("{$name}.create", $action)->name($action['name']);
     }
 
     /**
@@ -246,15 +233,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceStore($name, $base, $controller, $options, $locale)
+    protected function addResourceStore($name, $base, $controller, $options)
     {
+        // $uri = $this->getResourceUri($name);
+
         $action = $this->getResourceAction($name, $controller, 'store', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.create", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->post($uri,  $action);
+        return $this->router->locale("{$name}.create", $action)->method('POST')->name($action['name']);
     }
 
     /**
@@ -266,17 +251,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceShow($name, $base, $controller, $options, $locale)
+    protected function addResourceShow($name, $base, $controller, $options)
     {
-        $name = $this->getShallowName($name, $options);
+        // $uri = $this->getResourceUri($name);
 
         $action = $this->getResourceAction($name, $controller, 'show', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.show", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->get($uri, $action);
+        return $this->router->locale("{$name}.show", $action)->name($action['name']);
     }
 
     /**
@@ -288,17 +269,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceEdit($name, $base, $controller, $options, $locale)
+    protected function addResourceEdit($name, $base, $controller, $options)
     {
-        $name = $this->getShallowName($name, $options);
+        // $uri = $this->getResourceUri($name);
 
         $action = $this->getResourceAction($name, $controller, 'edit', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.edit", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->get($uri,  $action);
+        return $this->router->locale("{$name}.edit", $action)->name($action['name']);
     }
 
     /**
@@ -310,17 +287,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceUpdate($name, $base, $controller, $options, $locale)
+    protected function addResourceUpdate($name, $base, $controller, $options)
     {
-        $name = $this->getShallowName($name, $options);
+        // $uri = $this->getResourceUri($name);
 
         $action = $this->getResourceAction($name, $controller, 'update', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.edit", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->match(['PUT', 'PATCH'], $uri, $action);
+        return $this->router->locale("{$name}.edit", $action)->method('PUT')->name($action['name']);
     }
 
     /**
@@ -332,17 +305,13 @@ class MultiLanguageResourceRegistrar
      * @param  array  $options
      * @return \Illuminate\Routing\Route
      */
-    protected function addResourceDestroy($name, $base, $controller, $options, $locale)
+    protected function addResourceDestroy($name, $base, $controller, $options)
     {
-        $name = $this->getShallowName($name, $options);
+        // $uri = $this->getResourceUri($name);
 
         $action = $this->getResourceAction($name, $controller, 'destroy', $options);
 
-        $uri = MultiLanguage::generateUri("{$name}.destroy", $locale);
-
-        $action['as'] = "{$locale}.{$action['as']}";
-
-        return $this->router->delete($uri, $action);
+        return $this->router->locale("{$name}.destroy", $action)->method('DELETE')->name($action['name']);
     }
 
     /**
@@ -448,7 +417,7 @@ class MultiLanguageResourceRegistrar
     {
         $name = $this->getResourceRouteName($resource, $method, $options);
 
-        $action = ['as' => $name, 'uses' => $controller.'@'.$method];
+        $action = ['name' => $name, 'uses' => $controller.'@'.$method];
 
         if (isset($options['middleware'])) {
             $action['middleware'] = $options['middleware'];
@@ -462,8 +431,15 @@ class MultiLanguageResourceRegistrar
             $action['where'] = $options['wheres'];
         }
 
+
         if (isset($options['parents']) && isset($options['parents'][$name])) {
-            $action['parent'] = $options['parents'][$name];
+            $parent = $options['parents'][$name];
+
+            if ($parent == $name)
+            {
+                throw new InvalidArgumentException("Parent and Name cannot be the same.");
+            }
+            $action['parent'] = $parent;
         }
 
         return $action;

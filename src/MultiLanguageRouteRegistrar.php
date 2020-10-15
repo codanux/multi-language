@@ -163,7 +163,7 @@ class MultiLanguageRouteRegistrar
      * @param  \Closure|array|string|null  $action
      * @return \Illuminate\Routing\Route
      */
-    protected function  registerRoute($method, $uri, $action = null)
+    protected function registerRoute($method, $uri, $action = null)
     {
         if (! is_array($action)) {
             $action = array_merge($this->attributes, $action ? ['uses' => $action] : []);
@@ -255,6 +255,7 @@ class MultiLanguageRouteRegistrar
 
             #endregion
 
+
             #region Register Attributes
             foreach ($options as $key => $attribute)
             {
@@ -270,6 +271,7 @@ class MultiLanguageRouteRegistrar
             #endregion
 
             // Generate Route
+
             $uri = MultiLanguage::generateUri($name, $locale, $prefix);
 
             $method = $options['method'] ?? "get";

@@ -4,6 +4,7 @@ namespace Codanux\MultiLanguage;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\Traits\Macroable;
+use InvalidArgumentException;
 
 class MultiLanguagePendingRouteRegistration
 {
@@ -115,6 +116,11 @@ class MultiLanguagePendingRouteRegistration
 
     public function parent($name)
     {
+        if ($this->name == $name)
+        {
+            throw new InvalidArgumentException("Parent and Name cannot be the same.");
+        }
+
         $this->options['parent'] = $name;
 
         return $this;

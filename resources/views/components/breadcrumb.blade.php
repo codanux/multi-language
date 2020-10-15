@@ -12,7 +12,6 @@
         @endif
     @endif
 
-
     <li class="inline-flex items-center">
         <a href="{{ route($route->getName(), request()->route()->parameters()) }}">{{ trans("routes-names.{$name}") }}</a>
 

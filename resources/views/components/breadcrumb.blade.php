@@ -13,7 +13,9 @@
     @endif
 
     <li class="inline-flex items-center">
-        <a href="{{ route($route->getName(), request()->route()->parameters()) }}">{{ trans("routes-names.{$name}") }}</a>
+        <a href="{{ route($route->getName(), request()->route()->parameters()) }}">
+            {{ $route->getAction('label') }}
+        </a>
 
         @if($prefix)
         <svg class="h-5 w-auto text-gray-400" fill="currentColor" viewBox="0 0 20 20">

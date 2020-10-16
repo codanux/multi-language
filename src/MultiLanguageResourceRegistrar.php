@@ -114,9 +114,36 @@ class MultiLanguageResourceRegistrar
 
         foreach ($this->getResourceMethods($defaults, $options) as $m) {
 
-            $route = $this->{'addResource'.ucfirst($m)}(
-                $name, $base, $controller, $options
-            );
+            $action = $this->getResourceAction($name, $controller, $m, $options);
+
+            $options['name'] = $action['as'];
+            if (isset($action['parent']))
+                $options['parent'] = $action['parent'];
+
+            switch ($m)
+            {
+                case "index":
+                    $route = $this->router->locale("{$name}.index", $controller.'@'.$m, $options);
+                    break;
+                case "create":
+                    $route = $this->router->locale("{$name}.create", $controller.'@'.$m, $options);
+                    break;
+                case "store":
+                    $route = $this->router->locale("{$name}.create", $controller.'@'.$m, $options)->method('POST');
+                    break;
+                case "show":
+                    $route = $this->router->locale("{$name}.show", $controller.'@'.$m, $options);
+                    break;
+                case "edit":
+                    $route = $this->router->locale("{$name}.edit", $controller.'@'.$m, $options);
+                    break;
+                case "update":
+                    $route = $this->router->locale("{$name}.edit", $controller.'@'.$m, $options)->method('PUT');
+                    break;
+                case "destroy":
+                    $route = $this->router->locale("{$name}.destroy", $controller.'@'.$m, $options)->method('DELETE');
+                    break;
+            }
 
             if (isset($options['bindingFields'])) {
                 $this->setResourceBindingFields($route, $options['bindingFields']);
@@ -203,7 +230,7 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'index', $options);
 
-        return $this->router->locale("{$name}.index", $action)->name($action['name']);
+        return $this->router->locale("{$name}.index", $action, $options);
     }
 
     /**
@@ -221,7 +248,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'create', $options);
 
-        return $this->router->locale("{$name}.create", $action)->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.create", $action, $options);
     }
 
     /**
@@ -239,7 +268,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'store', $options);
 
-        return $this->router->locale("{$name}.create", $action)->method('POST')->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.create", $action, $options)->method('POST');
     }
 
     /**
@@ -257,7 +288,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'show', $options);
 
-        return $this->router->locale("{$name}.show", $action)->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.show", $action, $options);
     }
 
     /**
@@ -275,7 +308,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'edit', $options);
 
-        return $this->router->locale("{$name}.edit", $action)->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.edit", $action, $options);
     }
 
     /**
@@ -293,7 +328,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'update', $options);
 
-        return $this->router->locale("{$name}.edit", $action)->method('PUT')->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.edit", $action, $options)->method('PUT');
     }
 
     /**
@@ -311,7 +348,9 @@ class MultiLanguageResourceRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'destroy', $options);
 
-        return $this->router->locale("{$name}.destroy", $action)->method('DELETE')->name($action['name']);
+        $options['as'] = $action['as'];
+
+        return $this->router->locale("{$name}.destroy", $action, $options)->method('DELETE');
     }
 
     /**
@@ -417,7 +456,7 @@ class MultiLanguageResourceRegistrar
     {
         $name = $this->getResourceRouteName($resource, $method, $options);
 
-        $action = ['name' => $name, 'uses' => $controller.'@'.$method];
+        $action = ['as' => $name, 'uses' => $controller.'@'.$method];
 
         if (isset($options['middleware'])) {
             $action['middleware'] = $options['middleware'];

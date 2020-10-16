@@ -139,7 +139,8 @@ class MultiLanguageServiceProvider extends ServiceProvider
     {
         $this->callAfterResolving(BladeCompiler::class, function () {
             Blade::component('multi-language::components.breadcrumb', 'breadcrumb');
-            Blade::component('multi-language::components.links', 'locale-links');
+            Blade::component('multi-language::components.link', 'link');
+            Blade::component('multi-language::components.links', 'links');
         });
     }
 

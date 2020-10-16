@@ -58,7 +58,7 @@ class MultiLanguageRouteRegistrar
      * @var array
      */
     protected $allowedAttributes = [
-        'middleware', 'excluded_middleware', 'method', 'name', 'prefix', 'parent'
+        'middleware', 'excluded_middleware', 'method', 'name', 'prefix', 'parent', 'label'
     ];
 
     protected $localeAttributes = [
@@ -163,13 +163,13 @@ class MultiLanguageRouteRegistrar
      * @param  \Closure|array|string|null  $action
      * @return \Illuminate\Routing\Route
      */
-    protected function registerRoute($method, $uri, $action = null)
+    protected function registerRoute($method, $uri, $action = null, $options)
     {
         if (! is_array($action)) {
             $action = array_merge($this->attributes, $action ? ['uses' => $action] : []);
         }
 
-        return $this->router->{$method}($uri, $this->compileAction($action));
+        return $this->router->{$method}($uri, $this->compileAction($action), $options);
     }
 
     /**
@@ -220,51 +220,50 @@ class MultiLanguageRouteRegistrar
 
         $collection = new RouteCollection;
 
+
         foreach (config('multi-language.locales') as $locale)
         {
-            if (! key_exists('name', $options))
+            if (! key_exists("name", $options))
             {
                 $options['name'] = $name;
             }
 
             #region Group Stack
             $prefix = true;
+            $pr = null;
 
-            $stacks = $this->router->getGroupStack();
-
-            $stack = end($stacks);
-
-            if (key_exists('localePrefix', $stack))
+            if ($this->router->hasGroupStack())
             {
-                if (is_array($stack['localePrefix']))
-                {
-                    $pr = null;
-                    foreach (data_get($stack, 'localePrefix', []) as $key)
-                    {
-                        $pr = $pr.'/'.MultiLanguage::generateUri($key, $locale, $prefix);
-                        $prefix = false;
-                    }
+                $array = $this->router->getGroupStack();
+                $last = end($array);
 
-                    $this->attribute('prefix', $pr);
-                }
-                else {
-                    $this->attribute('prefix', MultiLanguage::generateUri($stack['localePrefix'], $locale));
+                if (key_exists('localePrefix', $last)) {
+                    $pr = MultiLanguage::generateUri($last['localePrefix'], $locale);
                     $prefix = false;
                 }
             }
 
-            #endregion
+            if (key_exists('localePrefix', $options))
+            {
+                $pr = $pr.'/'.MultiLanguage::generateUri($options['localePrefix'], $locale, $prefix);
+                $prefix = false;
+            }
 
+            $options['prefix'] = $pr;
+            #endregion
 
             #region Register Attributes
             foreach ($options as $key => $attribute)
             {
-                if (in_array($key, $this->localeAttributes))
+                if (in_array($key, $this->allowedAttributes))
                 {
-                    $this->attribute($key, "{$locale}.{$attribute}");
-                }
-                else {
-                    $this->attribute($key, $attribute);
+                    if (in_array($key, $this->localeAttributes))
+                    {
+                        $this->attribute($key, "{$locale}.{$attribute}");
+                    }
+                    else {
+                        $this->attribute($key, $attribute);
+                    }
                 }
             }
 
@@ -276,7 +275,9 @@ class MultiLanguageRouteRegistrar
 
             $method = $options['method'] ?? "get";
 
-            $route = $this->registerRoute($method, $uri, $controller);
+            $this->attribute('label', trans("routes-names.{$name}", [], $locale));
+
+            $route = $this->registerRoute($method, $uri, $controller, $options);
 
             $collection->add($route);
         }

@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 if (! function_exists('routeLocalized')) {
-    function routeLocalized($name, $parameters = [], $absolute = true, $locale = null)
+    function routeLocalized($name, $parameters = [], $locale = null, $absolute = true)
     {
         if (is_null($locale)){
             $locale = app()->getLocale();

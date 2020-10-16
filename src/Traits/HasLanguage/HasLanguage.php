@@ -6,7 +6,7 @@ use Illuminate\Support\Str;
 
 trait HasLanguage
 {
-    public static function bootHasLanguageTrait()
+    public static function bootHasLanguage()
     {
         self::creating(function ($model)
         {
@@ -30,11 +30,6 @@ trait HasLanguage
         }
 
         return $query->where('locale', $locale);
-    }
-
-    public function scopeOrLocale($query, $locale = null)
-    {
-
     }
 
     public function scopeLocaleSlug($query, $slug, $locale = null)

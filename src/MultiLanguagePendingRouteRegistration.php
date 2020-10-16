@@ -90,8 +90,8 @@ class MultiLanguagePendingRouteRegistration
     /**
      * Set the route names for controller actions.
      *
-     * @param  array|string  $names
-     * @return \Illuminate\Routing\PendingResourceRegistration
+     * @param array|string $names
+     * @return MultiLanguagePendingRouteRegistration
      */
     public function names($names)
     {
@@ -110,6 +110,13 @@ class MultiLanguagePendingRouteRegistration
     public function method($method = "GET")
     {
         $this->options['method'] = $method;
+
+        return $this;
+    }
+
+    public function localePrefix($prefix)
+    {
+        $this->options['localePrefix'] = $prefix;
 
         return $this;
     }

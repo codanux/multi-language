@@ -266,7 +266,6 @@ class MultiLanguageRouteRegistrar
                     }
                 }
             }
-
             #endregion
 
             // Generate Route

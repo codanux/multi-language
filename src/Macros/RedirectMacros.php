@@ -9,8 +9,9 @@ class RedirectMacros
 {
     public function routeLocale(): Closure
     {
-        return function (string $route, $parameters = [], int $status = 302, array $headers = []) {
-            $locale = app()->getLocale();
+        return function (string $route, $parameters = [], $locale = null, int $status = 302, array $headers = []) {
+            if (is_null($locale))
+                $locale = app()->getLocale();
 
             return $this->route("{$locale}.{$route}", $parameters, $status, $headers);
         };

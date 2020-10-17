@@ -36,7 +36,7 @@ trait MediaTrait {
         }
         else if ($locale)
         {
-            $media = $this->customMedia($this->locale($locale)->first(), $collectionName, $filters, $mediaRepository);
+            $media = $this->customMedia($this->translations()->locale($locale)->first(), $collectionName, $filters, $mediaRepository);
         }
 
 

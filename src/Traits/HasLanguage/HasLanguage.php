@@ -41,4 +41,9 @@ trait HasLanguage
 
         return $query->where('locale_slug', $slug)->first()->translations()->locale($locale);
     }
+
+    public function getLabel()
+    {
+        return $this->getKey();
+    }
 }

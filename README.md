@@ -69,15 +69,13 @@ Route::locale('post.destroy', 'PostController@destroy')->method('DELETE');
 Route::locale('dashboard', function () {
     return view('dashboard');
 })
-->name('home'); // default dashboard name
-
+->name('home');
 
 Route::group(['localePrefix' => 'admin.prefix'], function (){
 
-    Route::locale('dashboard', function () {
+    Route::locale('admin.dashboard', function () {
         return view('admin.dashboard');
-    })
-    ->name('admin.dashboard');
+    });
 
 });
 ```
@@ -129,10 +127,10 @@ public function show(Post $post)
 ## Views
 ``` php
 post.index
-    <x-locale-links component="jet-nav-link"></x-locale-links>
+    <x-links component="jet-nav-link"></x-locale-links>
 
 post.show
-    <x-locale-links :translations=['post' => $post]></x-locale-links>
+    <x-links :translations=['post' => $post]></x-locale-links>
     
     //category/{category}/posts/{post}
 

@@ -20,4 +20,9 @@ class PostCategory extends Model
             'translation_of'
         )->locale($this->locale);
     }
+
+    public function getLabel()
+    {
+        return $this->name;
+    }
 }

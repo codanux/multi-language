@@ -24,4 +24,9 @@ class Post extends Model // implements HasMedia
             'translation_of'
         )->locale($this->locale);
     }
+
+    public function getLabel()
+    {
+        return $this->name;
+    }
 }

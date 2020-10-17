@@ -14,7 +14,7 @@
 
     <li class="inline-flex items-center">
         <a href="{{ route($route->getName(), request()->route()->parameters()) }}">
-            {{ $route->getAction('label') }}
+            {{ trans($route->getAction('label'), collect(request()->route()->parameters())->map(function ($a) { return $a->getLabel(); })->toArray()) }}
         </a>
 
         @if($prefix)

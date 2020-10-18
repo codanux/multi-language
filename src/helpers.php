@@ -19,7 +19,7 @@ if (! function_exists('generateLink')) {
         $parameters = Route::current()->parameters();
         foreach($translations as $key => $trans)
         {
-            $parameters = array_merge($parameters, [$key => $trans->translations()->locale($locale)->first()]);
+            $parameters = array_merge($parameters, [$key => $trans->translations()->locale($locale)->first() ?? $trans]);
         }
 
         return app('url')->route($locale . '.' . substr(Route::currentRouteName(), 3), $parameters);

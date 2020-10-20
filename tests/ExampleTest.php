@@ -9,25 +9,32 @@ use Codanux\MultiLanguage\MultiLanguageServiceProvider;
 
 class ExampleTest extends TestCase
 {
+
     /** @test **/
-    public function a_multilingual_route_can_be_registered(): void
+    public function route_can_registered(): void
     {
+        $this->registerConfigs([
+            'multi-language.default_prefix' => true
+        ]);
+
         $this->registerTranslations([
             'en' => [
-                'routes.welcome' => 'welcome',
+                'routes.dashboard' => 'dashboard',
             ],
             'tr' => [
-                'routes.welcome' => 'hosgeldin',
+                'routes.dashboard' => 'panel',
             ],
         ]);
 
-        Route::locale('welcome', function () {
-            return "welcome";
+        Route::locale('dashboard', function () {
+            return "dashboard";
         });
 
-        $this->assertEquals(url('welcome'), routeLocalized('welcome'));
-    }
+        $this->assertEquals(url('en/dashboard'), routeLocalized('dashboard', [], 'en'));
 
+        $this->assertEquals(url('tr/panel'), routeLocalized('dashboard', [], 'tr'));
+
+    }
 
     protected function registerTranslations(array $translations): self
     {
@@ -40,14 +47,19 @@ class ExampleTest extends TestCase
         return $this;
     }
 
+    protected function registerConfigs(array $configs): self
+    {
+        $config = app('config');
+
+        foreach ($configs as $key => $value) {
+            $config->set($key, $value);
+        }
+
+        return $this;
+    }
+
     protected function getPackageProviders($app)
     {
         return [MultiLanguageServiceProvider::class];
-    }
-
-    /** @test */
-    public function true_is_true()
-    {
-        $this->assertTrue(true);
     }
 }

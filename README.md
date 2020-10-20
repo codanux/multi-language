@@ -127,10 +127,10 @@ public function show(Post $post)
 ## Views
 ``` php
 post.index
-    <x-links component="jet-nav-link"></x-locale-links>
+    <x-links component="jet-nav-link"></x-links>
 
 post.show
-    <x-links :translations=['post' => $post]></x-locale-links>
+    <x-links :translations=['post' => $post]></x-links>
     
     //category/{category}/posts/{post}
 

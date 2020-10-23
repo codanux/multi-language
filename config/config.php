@@ -7,7 +7,7 @@ return [
         'tr' => 'Türkçe'
     ],
 
-    'default_locale' => config('app.locale', 'en'),
+    'default_locale' => 'en',
 
     'default_prefix' => false,
 

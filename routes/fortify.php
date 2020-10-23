@@ -91,7 +91,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         Route::locale("user-profile-information.update", [ProfileInformationController::class, 'update'])
             ->middleware(['auth'])
             ->name('user-profile-information.update')
-            ->method('put');;
+            ->method('put');
     }
 
     // Passwords...
@@ -99,7 +99,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
         Route::locale("user-password.edit", [PasswordController::class, 'update'])
             ->middleware(['auth'])
             ->name('user-password.update')
-            ->method('put');;
+            ->method('put');
     }
 
     // Password Confirmation...
@@ -109,7 +109,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 
     Route::locale("password.confirm", [ConfirmablePasswordController::class, 'store'])
         ->middleware(['auth'])
-        ->method('post');;
+        ->method('post');
 
     Route::locale("password.confirmation", [ConfirmedPasswordStatusController::class, 'show'])
         ->middleware(['auth'])
@@ -123,7 +123,7 @@ Route::group(['middleware' => config('fortify.middleware', ['web'])], function (
 
         Route::locale("two-factor.login", [TwoFactorAuthenticatedSessionController::class, 'store'])
             ->middleware(['guest'])
-            ->method('post');;
+            ->method('post');
 
         $twoFactorMiddleware = Features::optionEnabled(Features::twoFactorAuthentication(), 'confirmPassword')
             ? ['auth', 'password.confirm']

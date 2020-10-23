@@ -221,7 +221,7 @@ class MultiLanguageRouteRegistrar
         $collection = new RouteCollection;
 
 
-        foreach (config('multi-language.locales') as $locale)
+        foreach (config('multi-language.locales') as $locale => $localeLabel)
         {
             if (! key_exists("name", $options))
             {

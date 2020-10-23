@@ -1,7 +1,7 @@
 @props(['component' => 'jet-nav-link', 'translations' => []])
 
-@foreach(config('multi-language.locales') as $locale)
+@foreach(config('multi-language.locales') as $locale => $label)
     <x-dynamic-component :component="$component" href="{{ generateLink($locale, $translations) }}">
-        {{ strtoupper($locale) }}
+        {!! $label !!}
     </x-dynamic-component>
 @endforeach

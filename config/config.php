@@ -3,8 +3,8 @@
 return [
 
     'locales' => [
-        'en',
-        'tr'
+        'en' => 'English',
+        'tr' => 'Türkçe'
     ],
 
     'default_locale' => config('app.locale', 'en'),

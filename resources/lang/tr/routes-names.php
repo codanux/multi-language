@@ -68,7 +68,7 @@ return [
     'post' => [
         'index' => 'Postlar',
         'create' => 'Yeni Post',
-        'show' => 'Post Detay',
+        'show' => ':post',
         'edit' => 'Post Düzenle',
         'destroy' => 'Post Sil',
     ],

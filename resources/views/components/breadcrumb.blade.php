@@ -14,7 +14,7 @@
 
     <li class="inline-flex items-center">
         <a href="{{ route($route->getName(), request()->route()->parameters()) }}">
-            {{ trans($route->getAction('label'), collect(request()->route()->parameters())->map(function ($a) { return $a->getLabel(); })->toArray()) }}
+            {{ trans($route->getAction('label'), collect(request()->route()->parameters())->map(function ($a) { return $a instanceof \Illuminate\Database\Eloquent\Model ? $a->getLabel() : $a; })->toArray()) }}
         </a>
 
         @if($prefix)

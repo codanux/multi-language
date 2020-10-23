@@ -17,7 +17,7 @@ class DetectRequestLocale
      */
     public function handle($request, Closure $next)
     {
-        if (in_array($request->segment(1), config('multi-language.locales'))) {
+        if (in_array($request->segment(1), array_keys(config('multi-language.locales')))) {
             $this->change($request->segment(1));
         }
         else {

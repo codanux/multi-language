@@ -70,7 +70,7 @@ return [
     'post' => [
         'index' => 'Posts',
         'create' => 'Post Create',
-        'show' => 'Post Detail',
+        'show' => ':post',
         'edit' => 'Post Edit',
         'destroy' => 'Post Delete',
     ],

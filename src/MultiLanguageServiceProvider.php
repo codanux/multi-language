@@ -21,11 +21,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        /*
-         * Optional methods to load your package assets
-         */
         $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'multi-language');
-
         $this->loadViewsFrom(__DIR__.'/../resources/views', 'multi-language');
         $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
 
@@ -60,7 +56,6 @@ class MultiLanguageServiceProvider extends ServiceProvider
         $this->app->singleton('multi-language', function () {
             return new MultiLanguage;
         });
-
 
         Router::mixin(new RouterMacros);
 
@@ -98,12 +93,12 @@ class MultiLanguageServiceProvider extends ServiceProvider
 
             $this->publishes([
                 __DIR__.'/../config/config.php' => config_path('multi-language.php'),
-            ], 'config');
+            ], 'multi-language-config');
 
             // Publishing the views.
             $this->publishes([
                 __DIR__.'/../resources/views' => resource_path('views/vendor/multi-language'),
-            ], 'views');
+            ], 'multi-language-views');
 
             // Publishing assets.
             /*$this->publishes([
@@ -113,7 +108,7 @@ class MultiLanguageServiceProvider extends ServiceProvider
             // Publishing the translation files.
             $this->publishes([
                 __DIR__.'/../resources/lang' => resource_path('lang'),
-            ], 'lang');
+            ], 'multi-language-lang');
 
             // Registering package commands.
             // $this->commands([]);
@@ -123,14 +118,14 @@ class MultiLanguageServiceProvider extends ServiceProvider
                 $this->publishes([
                     __DIR__ . '/Models/Post/Post.php.stub' => app_path('Models/Post/Post.php'),
                     __DIR__ . '/Models/Post/PostCategory.php.stub' => app_path('Models/Post/PostCategory.php'),
-                ], 'models');
+                ], 'multi-language-models');
 
 
                 $this->publishes([
                     __DIR__ . '/../database/migrations/create_post_categories_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_post_categories_table.php'),
                     __DIR__ . '/../database/migrations/create_posts_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_posts_table.php'),
                     // you can add any number of migrations here
-                ], 'migrations');
+                ], 'multi-language-migrations');
             }
         }
     }

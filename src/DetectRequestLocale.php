@@ -19,8 +19,11 @@ class DetectRequestLocale
         if (in_array($request->segment(1), array_keys(config('multi-language.locales')))) {
             $this->change($request->segment(1));
         }
+        else if (Session::has('locale')) {
+            $this->change(Session::get('locale'));
+        }
         else {
-            $this->change(Session::has('locale') ? Session::get('locale') : config('multi-language.default_locale'));
+            $this->change(config('multi-language.default_locale'));
         }
 
         return $next($request);

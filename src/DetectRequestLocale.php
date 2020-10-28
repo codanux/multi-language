@@ -4,6 +4,7 @@ namespace Codanux\MultiLanguage;
 
 use Closure;
 use Illuminate\Support\Facades\Session;
+use function Couchbase\defaultDecoder;
 
 class DetectRequestLocale
 {
@@ -16,11 +17,9 @@ class DetectRequestLocale
      */
     public function handle($request, Closure $next)
     {
+
         if (in_array($request->segment(1), array_keys(config('multi-language.locales')))) {
             $this->change($request->segment(1));
-        }
-        else if (Session::has('locale')) {
-            $this->change(Session::get('locale'));
         }
         else {
             $this->change(config('multi-language.default_locale'));
@@ -30,7 +29,8 @@ class DetectRequestLocale
     }
 
 
-    private function change($locale){
+    private function change($locale)
+    {
         Session::put('locale', $locale);
         app()->setLocale($locale);
     }

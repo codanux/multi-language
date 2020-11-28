@@ -22,6 +22,10 @@ if (! function_exists('generateLink')) {
             $parameters = array_merge($parameters, [$key => $trans->translations()->locale($locale)->first() ?? $trans]);
         }
 
-        return app('url')->route($locale . '.' . substr(Route::currentRouteName(), 3), $parameters);
+        $name = explode('.', Route::currentRouteName());
+
+        array_splice($name, 0, 1, $locale);
+
+        return app('url')->route(join('.', $name), $parameters);
     }
 }

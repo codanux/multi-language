@@ -65,6 +65,14 @@ return [
         'destroy' => 'kullanici/profile-photo',
     ],
 
+    'category' => [
+        'index' => 'kategorileri',
+        'create' => 'kategori/yeni',
+        'show' => 'kategori/{category}',
+        'edit' => 'kategori/{category}/duzenle',
+        'destroy' => 'kategori/{category}/sil',
+    ],
+
     'post' => [
         'index' => 'postlar',
         'create' => 'postlar/yeni',

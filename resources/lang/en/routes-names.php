@@ -67,12 +67,20 @@ return [
 
     ],
 
+    'category' => [
+        'index' => 'Categories',
+        'create' => 'Category Create',
+        'show' => ':category',
+        'edit' => ':category Edit',
+        'destroy' => ':category Delete',
+    ],
+
     'post' => [
         'index' => 'Posts',
         'create' => 'Post Create',
         'show' => ':post',
-        'edit' => 'Post Edit',
-        'destroy' => 'Post Delete',
+        'edit' => ':post Edit',
+        'destroy' => ':post Delete',
     ],
 
 ];

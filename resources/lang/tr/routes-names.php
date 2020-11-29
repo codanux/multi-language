@@ -65,11 +65,19 @@ return [
         'destroy' => 'Profil Fotoğrafı',
     ],
 
+    'category' => [
+        'index' => 'Kategorileri',
+        'create' => 'Yeni Kategori',
+        'show' => ':category',
+        'edit' => ':category Düzenle',
+        'destroy' => ':category Sil',
+    ],
+
     'post' => [
         'index' => 'Postlar',
         'create' => 'Yeni Post',
         'show' => ':post',
-        'edit' => 'Post Düzenle',
-        'destroy' => 'Post Sil',
+        'edit' => ':post Düzenle',
+        'destroy' => ':post Sil',
     ],
 ];

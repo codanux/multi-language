@@ -67,6 +67,14 @@ return [
 
     ],
 
+    'category' => [
+        'index' => 'categories',
+        'create' => 'categories/create',
+        'show' => 'category/{category}',
+        'edit' => 'category/{category}/edit',
+        'destroy' => 'category/{category}/delete',
+    ],
+
     'post' => [
         'index' => 'posts',
         'create' => 'posts/create',

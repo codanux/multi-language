@@ -110,17 +110,6 @@ class MultiLanguageServiceProvider extends ServiceProvider
                 __DIR__.'/../resources/lang' => resource_path('lang'),
             ], 'multi-language-lang');
 
-
-            // if (! class_exists('CreatePostsTable')) {
-            //    $this->publishes([
-            //        __DIR__ . '/Models/Post/Post.php.stub' => app_path('Models/Post/Post.php'),
-            //        __DIR__ . '/Models/Post/PostCategory.php.stub' => app_path('Models/Post/PostCategory.php'),
-            //    ], 'multi-language-models');
-            //    $this->publishes([
-            //        __DIR__ . '/../database/migrations/create_post_categories_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_post_categories_table.php'),
-            //        __DIR__ . '/../database/migrations/create_posts_table.php.stub' => database_path('migrations/' . date('Y_m_d_His', time()) . '_create_posts_table.php'),
-            //    ], 'multi-language-migrations');
-            // }
         }
     }
 

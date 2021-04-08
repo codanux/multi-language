@@ -30,9 +30,11 @@ class DetectRequestLocale
 
     private function change($locale)
     {
+        if (app()->getLocale() != $locale)
+            LocaleChange::dispatch($locale);
+
         Session::put('locale', $locale);
         app()->setLocale($locale);
 
-        LocaleChange::dispatch($locale);
     }
 }

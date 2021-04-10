@@ -17,6 +17,10 @@ if (! function_exists('generateLink')) {
     function generateLink($locale = null, $translations = [])
     {
         $parameters = Route::current()->parameters();
+        $parameters = array_merge($parameters, [
+            'locale' => $locale
+        ]);
+
         foreach($translations as $key => $trans)
         {
             $parameters = array_merge($parameters, [$key => $trans->translations()->locale($locale)->first() ?? $trans]);

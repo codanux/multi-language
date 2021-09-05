@@ -5,8 +5,6 @@
 [![Quality Score](https://img.shields.io/scrutinizer/g/codanux/multi-language.svg?style=flat-square)](https://scrutinizer-ci.com/g/codanux/multi-language)
 [![Total Downloads](https://img.shields.io/packagist/dt/codanux/multi-language.svg?style=flat-square)](https://packagist.org/packages/codanux/multi-language)
 
-This is where your description should go. Try and limit it to a paragraph or two, and maybe throw in a mention of what PSRs you support to avoid any confusion with users and contributors.
-
 ## Installation
 
 You can install the package via composer:
@@ -113,9 +111,9 @@ public function store(Request $request)
        'translation_of' => $post->translation_of
     ]);
     
-    Post::localeSlug('post-1', 'tr')->first() // Post tr
+    Post::localeSlug('post-1', 'tr')->first(); // Post tr
     
-    Post::localeSlug('post-1', 'en')->first() // Post en
+    Post::localeSlug('post-1', 'en')->first(); // Post en
 }
 
 public function show(Post $post)
